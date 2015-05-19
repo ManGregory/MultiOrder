@@ -23,6 +23,15 @@ namespace MultiOrderWin
             _form = form;
             Closed += (sender, args) => _form.Close();
             gridOrders.DataSource = _db.Orders.Local.ToBindingList();
+            SetRights();
+        }
+
+        private void SetRights()
+        {
+            if (!Current.CurrentUser.IsAdmin)
+            {
+                miCatalogs.Visible = false;
+            }
         }
 
         private void miSemesters_Click(object sender, EventArgs e)
