@@ -10,7 +10,8 @@ namespace MultiOrderWin
         public LoginForm()
         {
             InitializeComponent();
-            Database.SetInitializer(new MediaContextInitializer());   
+            Database.SetInitializer(new MediaContextInitializer());
+            txtLogin.Focus();
         }
 
         private void btnOk_Click(object sender, System.EventArgs e)

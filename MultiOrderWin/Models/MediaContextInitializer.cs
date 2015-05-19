@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MultiOrderWin.Models
 {
-    class MediaContextInitializer : DropCreateDatabaseAlways<MediaContext>
+    class MediaContextInitializer : DropCreateDatabaseIfModelChanges<MediaContext>
     {
         protected override void Seed(MediaContext context)
         {

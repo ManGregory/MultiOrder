@@ -56,7 +56,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(135, 80);
+            this.btnOk.Location = new System.Drawing.Point(64, 80);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(87, 25);
             this.btnOk.TabIndex = 2;
@@ -66,7 +66,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(230, 80);
+            this.btnCancel.Location = new System.Drawing.Point(167, 80);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 25);
             this.btnCancel.TabIndex = 3;
@@ -78,7 +78,7 @@
             // 
             this.txtLogin.Location = new System.Drawing.Point(64, 11);
             this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(252, 22);
+            this.txtLogin.Size = new System.Drawing.Size(190, 22);
             this.txtLogin.TabIndex = 4;
             // 
             // txtPassword
@@ -86,14 +86,14 @@
             this.txtPassword.Location = new System.Drawing.Point(64, 44);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(252, 22);
+            this.txtPassword.Size = new System.Drawing.Size(190, 22);
             this.txtPassword.TabIndex = 5;
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(331, 117);
+            this.ClientSize = new System.Drawing.Size(266, 117);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtLogin);
             this.Controls.Add(this.btnCancel);

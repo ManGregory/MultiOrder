@@ -14,7 +14,7 @@ namespace MultiOrderWin
 {
     public partial class MainForm : Form
     {
-        private MediaContext _db;
+        private MediaContext _db = new MediaContext();
         private readonly LoginForm _form;
 
         public MainForm(LoginForm form)
@@ -22,6 +22,15 @@ namespace MultiOrderWin
             InitializeComponent();
             _form = form;
             Closed += (sender, args) => _form.Close();
+            gridOrders.DataSource = _db.Orders.Local.ToBindingList();
+        }
+
+        private void miSemesters_Click(object sender, EventArgs e)
+        {
+            using (var semesterForm = new SemesterForm())
+            {
+                semesterForm.ShowDialog(this);
+            }
         }
     }
 }
