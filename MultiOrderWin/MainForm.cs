@@ -40,5 +40,13 @@ namespace MultiOrderWin
                 classroomForm.ShowDialog(this);
             }
         }
+
+        private void miEquipment_Click(object sender, EventArgs e)
+        {
+            using (var equipmentForm = new EquipmentForm())
+            {
+                equipmentForm.ShowDialog(this);
+            }
+        }
     }
 }

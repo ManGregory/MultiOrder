@@ -93,6 +93,7 @@
             this.miEquipment.Name = "miEquipment";
             this.miEquipment.Size = new System.Drawing.Size(155, 22);
             this.miEquipment.Text = "Оборудование";
+            this.miEquipment.Click += new System.EventHandler(this.miEquipment_Click);
             // 
             // miClassrooms
             // 

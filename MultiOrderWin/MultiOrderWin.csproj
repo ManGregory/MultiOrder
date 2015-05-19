@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddEquipmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEquipmentForm.Designer.cs">
+      <DependentUpon>AddEquipmentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClassroomForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +65,12 @@
       <DependentUpon>ClassroomForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Current.cs" />
+    <Compile Include="EquipmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EquipmentForm.Designer.cs">
+      <DependentUpon>EquipmentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,8 +99,14 @@
     <Compile Include="SemesterForm.Designer.cs">
       <DependentUpon>SemesterForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AddEquipmentForm.resx">
+      <DependentUpon>AddEquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ClassroomForm.resx">
       <DependentUpon>ClassroomForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EquipmentForm.resx">
+      <DependentUpon>EquipmentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

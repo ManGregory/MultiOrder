@@ -13,45 +13,42 @@ using MultiOrderWin.Properties;
 
 namespace MultiOrderWin
 {
-    public partial class SemesterForm : Form
+    public partial class ClassroomForm : Form
     {
         private readonly MediaContext _db = new MediaContext();
         private readonly BindingSource _gridBindingSource = new BindingSource();
 
-        public SemesterForm()
+        public ClassroomForm()
         {
             InitializeComponent();
-            _db.Semesters.Load();
-            BindingList<Semester> gridBindingList = _db.Semesters.Local.ToBindingList();
-            _gridBindingSource.DataSource = gridBindingList;
-            gridSemesters.DataSource = _gridBindingSource;
-            bindingNavigator1.BindingSource = _gridBindingSource;
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            Save();
+            _db.Classrooms.Load();
+            BindingList<Classroom> gridBindingList = _db.Classrooms.Local.ToBindingList();
+            _gridBindingSource.DataSource = gridBindingList;           
+            gridClassrooms.DataSource = _gridBindingSource;
+            gridClassrooms.Columns[0].Width = gridClassrooms.Width - 50;
+            bnClassrooms.BindingSource = _gridBindingSource;
         }
 
         private void Save()
         {
             try
             {
-                _db.SaveChanges();   
+                _db.SaveChanges();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }            
+            }
+            
         }
 
-        private void gridSemesters_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void gridClassrooms_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.ThrowException = false;
             MessageBox.Show(Resources.GridDataErrorMessage);
         }
 
-        private void SemesterForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void ClassroomForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Save();
         }
@@ -59,6 +56,11 @@ namespace MultiOrderWin
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            Save();
         }
     }
 }

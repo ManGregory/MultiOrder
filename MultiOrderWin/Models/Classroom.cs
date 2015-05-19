@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MultiOrderWin.Models
 {
-    class Classroom
+    public class Classroom
     {
         [Browsable(false)]
         [Key]
@@ -20,5 +20,13 @@ namespace MultiOrderWin.Models
         [StringLength(100)]
         [DisplayName("Название аудитории")]
         public string Name { get; set; }
+
+        [Browsable(false)]
+        public static readonly Classroom Empty = new Classroom { Name = "" };
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1}", Name == string.Empty ? string.Empty : "Аудитория", Name);
+        }
     }
 }
