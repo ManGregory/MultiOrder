@@ -32,5 +32,13 @@ namespace MultiOrderWin
                 semesterForm.ShowDialog(this);
             }
         }
+
+        private void miClassrooms_Click(object sender, EventArgs e)
+        {
+            using (var classroomForm = new ClassroomForm())
+            {
+                classroomForm.ShowDialog(this);
+            }
+        }
     }
 }

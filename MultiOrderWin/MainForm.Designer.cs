@@ -74,7 +74,7 @@
             // miClose
             // 
             this.miClose.Name = "miClose";
-            this.miClose.Size = new System.Drawing.Size(152, 22);
+            this.miClose.Size = new System.Drawing.Size(108, 22);
             this.miClose.Text = "Выход";
             // 
             // miCatalogs
@@ -99,6 +99,7 @@
             this.miClassrooms.Name = "miClassrooms";
             this.miClassrooms.Size = new System.Drawing.Size(155, 22);
             this.miClassrooms.Text = "Аудитории";
+            this.miClassrooms.Click += new System.EventHandler(this.miClassrooms_Click);
             // 
             // miSemesters
             // 
@@ -126,18 +127,18 @@
             // miRef
             // 
             this.miRef.Name = "miRef";
-            this.miRef.Size = new System.Drawing.Size(152, 22);
+            this.miRef.Size = new System.Drawing.Size(149, 22);
             this.miRef.Text = "Справка";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(146, 6);
             // 
             // miAbout
             // 
             this.miAbout.Name = "miAbout";
-            this.miAbout.Size = new System.Drawing.Size(152, 22);
+            this.miAbout.Size = new System.Drawing.Size(149, 22);
             this.miAbout.Text = "О программе";
             // 
             // pnlMain
