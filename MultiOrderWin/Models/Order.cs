@@ -29,14 +29,23 @@ namespace MultiOrderWin.Models
         [DisplayName("До какой пары")]
         public int ToPair { get; set; }
 
+        [Browsable(false)]
+        public int ClassroomId { get; set; }
+        [ForeignKey("ClassroomId")]
         [DisplayName("Аудитория")]
-        public virtual Classroom Classroom { get; set; }
+        public Classroom Classroom { get; set; }
 
+        [Browsable(false)]
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
         [DisplayName("Пользователь")]
-        public virtual User User { get; set; }
+        public User User { get; set; }
 
+        [Browsable(false)]
+        public int EquipmentId { get; set; }
+        [ForeignKey("EquipmentId")]
         [DisplayName("Оборудование")]
-        public virtual Equipment Equipment { get; set; }
+        public Equipment Equipment { get; set; }
 
         [Browsable(false)]
         public int Amount { get; set; }

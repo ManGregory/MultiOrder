@@ -114,6 +114,7 @@
             this.miUsers.Name = "miUsers";
             this.miUsers.Size = new System.Drawing.Size(155, 22);
             this.miUsers.Text = "Пользователи";
+            this.miUsers.Click += new System.EventHandler(this.miUsers_Click);
             // 
             // miHelp
             // 

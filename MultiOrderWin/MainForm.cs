@@ -48,5 +48,13 @@ namespace MultiOrderWin
                 equipmentForm.ShowDialog(this);
             }
         }
+
+        private void miUsers_Click(object sender, EventArgs e)
+        {
+            using (var usersForm = new UsersForm())
+            {
+                usersForm.ShowDialog(this);
+            }
+        }
     }
 }
