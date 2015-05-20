@@ -195,7 +195,7 @@
             // 
             this.btnSign.Location = new System.Drawing.Point(318, 8);
             this.btnSign.Name = "btnSign";
-            this.btnSign.Size = new System.Drawing.Size(88, 39);
+            this.btnSign.Size = new System.Drawing.Size(100, 39);
             this.btnSign.TabIndex = 3;
             this.btnSign.Text = "Утвердить";
             this.btnSign.UseVisualStyleBackColor = true;

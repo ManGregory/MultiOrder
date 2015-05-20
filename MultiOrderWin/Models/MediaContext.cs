@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +15,28 @@ namespace MultiOrderWin.Models
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Classroom> Classrooms { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrdersEquipment> OrdersEquipments { get; set; }
 
         public MediaContext()
             : base("MultiOrderConnectionString")
         {
             
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrdersEquipment>()
+                .HasKey(cp => new { cp.OrderId, cp.EquipmentId });
+
+            modelBuilder.Entity<Order>()
+                        .HasMany(c => c.OrdersEquipment)
+                        .WithRequired()
+                        .HasForeignKey(cp => cp.OrderId);
+
+            modelBuilder.Entity<Equipment>()
+                        .HasMany(p => p.OrdersEquipment)
+                        .WithRequired()
+                        .HasForeignKey(cp => cp.EquipmentId);
         }
     }
 }

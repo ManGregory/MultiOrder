@@ -87,7 +87,7 @@ namespace MultiOrderWin
 
         private void BindGrid()
         {
-            _db.Orders.Include(o => o.Classroom).Include(o => o.Equipment).Include(o => o.User).Load();
+            _db.Orders.Include(o => o.Classroom).Include(o => o.User).Load();
         }
 
         private void Save()

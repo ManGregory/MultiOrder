@@ -42,13 +42,7 @@ namespace MultiOrderWin.Models
         public User User { get; set; }
 
         [Browsable(false)]
-        public int EquipmentId { get; set; }
-        [ForeignKey("EquipmentId")]
-        [DisplayName("Оборудование")]
-        public Equipment Equipment { get; set; }
-
-        [DisplayName("Количество")]
-        public int Amount { get; set; }
+        public virtual ICollection<OrdersEquipment> OrdersEquipment { get; set; }
 
         [Browsable(false)]
         public bool IsSigned { get; set; }

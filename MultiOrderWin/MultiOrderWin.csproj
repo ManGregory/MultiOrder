@@ -58,6 +58,12 @@
     <Compile Include="AddEquipmentForm.Designer.cs">
       <DependentUpon>AddEquipmentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddEquipmentToOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEquipmentToOrderForm.Designer.cs">
+      <DependentUpon>AddEquipmentToOrderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,7 @@
     <Compile Include="Models\MediaContext.cs" />
     <Compile Include="Models\MediaContextInitializer.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrdersEquipment.cs" />
     <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
@@ -113,6 +120,9 @@
     </Compile>
     <EmbeddedResource Include="AddEquipmentForm.resx">
       <DependentUpon>AddEquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddEquipmentToOrderForm.resx">
+      <DependentUpon>AddEquipmentToOrderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddOrderForm.resx">
       <DependentUpon>AddOrderForm.cs</DependentUpon>

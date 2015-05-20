@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,11 +30,6 @@ namespace MultiOrderWin.Models
                 {
                     new Equipment {ClassroomId = 1, Name = "Ноутбук", Amount = 5},
                     new Equipment {ClassroomId = null, Name = "Проектор", Amount = 5}
-                });
-            context.Semesters.AddRange(
-                new[]
-                {
-                    new Semester {BeginDate = DateTime.Parse("01.01.2015"), EndDate = DateTime.Parse("31.06.2015")}
                 });
             context.SaveChanges();
         }

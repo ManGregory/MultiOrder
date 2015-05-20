@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects.DataClasses;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,23 +16,40 @@ namespace MultiOrderWin
     public partial class AddOrderForm : Form
     {
         public Order Order { get; set; }
+        
         private readonly MediaContext _db = new MediaContext();
+        private List<OrdersEquipment> _equipmentList = new List<OrdersEquipment>();
 
         public AddOrderForm()
         {
             InitializeComponent();
             Text = "Добавление заявки";
+            Order = new Order();
             LoadWeeks();
             LoadPeriods();
             BindClassrooms();
-            BindEquipments();
+            gridEquipments.AutoGenerateColumns = false;
         }
 
         private void BindEquipments()
         {
-            _db.Equipments.Load();
-            var equipments = _db.Equipments.Local.Select(s => s).ToList();
-            cmbEquipments.DataSource = equipments;
+            if (Order != null)
+            {
+                gridEquipments.Rows.Clear();
+                foreach (var orderEquipment in Order.OrdersEquipment)
+                {
+                    var equipment = _db.Equipments.Find(orderEquipment.EquipmentId);
+                    if (equipment != null)
+                    {
+                        var row = new DataGridViewRow();
+                        row.Cells.Add(new DataGridViewTextBoxCell {Value = equipment.Name});
+                        row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.Amount});
+                        row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.OrderId});
+                        row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.EquipmentId});
+                        gridEquipments.Rows.Add(row);
+                    }
+                }
+            }
         }
 
         private void BindClassrooms()
@@ -67,11 +85,10 @@ namespace MultiOrderWin
             edDate.Value = order.Date;
             numFromPair.Value = order.FromPair;
             numToPair.Value = order.ToPair;
-            numAmount.Value = order.Amount;
             SelectClassroom(order.ClassroomId);
-            SelectEquipment(order.EquipmentId);
             SelectWeek(order.WeekNumber);
             SelectPeriod(order.Period);
+            BindEquipments();
         }
 
         private void SelectPeriod(string period)
@@ -98,19 +115,6 @@ namespace MultiOrderWin
             }
         }
 
-        private void SelectEquipment(int equipmentId)
-        {
-            foreach (var item in cmbEquipments.Items)
-            {
-                var equipment = item as Equipment;
-                if ((equipment != null) && (equipment.Id == equipmentId))
-                {
-                    cmbEquipments.SelectedItem = item;
-                    break;
-                }
-            }
-        }
-
         private void SelectClassroom(int classroomId)
         {
             foreach (var item in cmbClassrooms.Items)
@@ -126,16 +130,47 @@ namespace MultiOrderWin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (Order == null) Order = new Order();
             Order.Date = edDate.Value;
             Order.FromPair = (int)numFromPair.Value;
             Order.ToPair = (int)numToPair.Value;
             Order.ClassroomId = (cmbClassrooms.SelectedItem as Classroom).Id;
-            Order.EquipmentId = (cmbEquipments.SelectedItem as Equipment).Id;
-            Order.Amount = (int)numAmount.Value;
             Order.UserId = Current.CurrentUser.Id;
             Order.Period = cmbPeriods.SelectedItem.ToString();
             Order.WeekNumber = cmbWeeks.SelectedItem.ToString();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            using (var addEquipmentToOrderForm = new AddEquipmentToOrderForm())
+            {
+                if (addEquipmentToOrderForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (Order.OrdersEquipment == null) Order.OrdersEquipment = new EntityCollection<OrdersEquipment>();
+                    Order.OrdersEquipment.Add(addEquipmentToOrderForm.OrdersEquipment);
+                    BindEquipments();
+                }
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (gridEquipments.CurrentRow != null)
+            {
+                var orderId = (int)gridEquipments.CurrentRow.Cells["OrderId"].Value;
+                var equipmentId = (int)gridEquipments.CurrentRow.Cells["EquipmentId"].Value;
+                var currentOrderEquipment =
+                    Order.OrdersEquipment.FirstOrDefault(o => o.OrderId == orderId && o.EquipmentId == equipmentId);
+                using (var addEquipmentToOrderForm = new AddEquipmentToOrderForm(currentOrderEquipment))
+                {
+                    if (addEquipmentToOrderForm.ShowDialog(this) == DialogResult.OK)
+                    {
+                        if (Order.OrdersEquipment == null)
+                            Order.OrdersEquipment = new EntityCollection<OrdersEquipment>();
+                        Order.OrdersEquipment.Add(addEquipmentToOrderForm.OrdersEquipment);
+                        BindEquipments();
+                    }
+                }
+            }
         }
     }
 }

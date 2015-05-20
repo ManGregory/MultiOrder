@@ -32,6 +32,9 @@ namespace MultiOrderWin.Models
         public Classroom Classroom { get; set; }
 
         [Browsable(false)]
+        public virtual ICollection<OrdersEquipment> OrdersEquipment { get; set; }
+
+        [Browsable(false)]
         public static readonly Equipment Empty = new Equipment { Name = "" };
 
         public override string ToString()

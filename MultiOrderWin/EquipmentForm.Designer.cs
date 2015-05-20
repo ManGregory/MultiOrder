@@ -51,7 +51,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(514, 47);
+            this.panel3.Size = new System.Drawing.Size(350, 47);
             this.panel3.TabIndex = 1;
             // 
             // btnRemove
@@ -91,12 +91,12 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 237);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(514, 44);
+            this.panel1.Size = new System.Drawing.Size(350, 44);
             this.panel1.TabIndex = 2;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(412, 3);
+            this.btnCancel.Location = new System.Drawing.Point(244, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(98, 36);
             this.btnCancel.TabIndex = 3;
@@ -106,7 +106,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(304, 4);
+            this.btnSave.Location = new System.Drawing.Point(134, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 34);
             this.btnSave.TabIndex = 2;
@@ -120,7 +120,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 47);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(514, 190);
+            this.panel2.Size = new System.Drawing.Size(350, 190);
             this.panel2.TabIndex = 3;
             // 
             // gridEquipment
@@ -133,14 +133,14 @@
             this.gridEquipment.Location = new System.Drawing.Point(0, 0);
             this.gridEquipment.Name = "gridEquipment";
             this.gridEquipment.ReadOnly = true;
-            this.gridEquipment.Size = new System.Drawing.Size(514, 190);
+            this.gridEquipment.Size = new System.Drawing.Size(350, 190);
             this.gridEquipment.TabIndex = 0;
             // 
             // EquipmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 281);
+            this.ClientSize = new System.Drawing.Size(350, 281);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
