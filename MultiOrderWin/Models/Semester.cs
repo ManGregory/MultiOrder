@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MultiOrderWin.Models
 {
-    class Semester
+    public class Semester
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

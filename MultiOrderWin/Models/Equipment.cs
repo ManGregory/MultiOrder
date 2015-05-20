@@ -29,7 +29,7 @@ namespace MultiOrderWin.Models
         public int? ClassroomId { get; set; }
         [DisplayName("Аудитория")]
         [ForeignKey("ClassroomId")]
-        public Classroom Classroom { get; set; }
+        public virtual Classroom Classroom { get; set; }
 
         [Browsable(false)]
         public virtual ICollection<OrdersEquipment> OrdersEquipment { get; set; }

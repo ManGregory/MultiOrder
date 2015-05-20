@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,7 @@ using System.Data.Entity;
 
 namespace MultiOrderWin.Models
 {
-    class MediaContext : DbContext
+    public class MediaContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Semester> Semesters { get; set; }
@@ -21,6 +23,11 @@ namespace MultiOrderWin.Models
             : base("MultiOrderConnectionString")
         {
             
+        }
+
+        public ObjectContext ObjectContext()
+        {
+            return (this as IObjectContextAdapter).ObjectContext;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

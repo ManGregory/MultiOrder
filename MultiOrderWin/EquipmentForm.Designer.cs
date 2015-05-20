@@ -28,31 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.pnlControls = new System.Windows.Forms.Panel();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.gridEquipment = new System.Windows.Forms.DataGridView();
-            this.panel3.SuspendLayout();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.chkAvailable = new System.Windows.Forms.CheckBox();
+            this.numPair = new System.Windows.Forms.NumericUpDown();
+            this.edDate = new System.Windows.Forms.DateTimePicker();
+            this.pnlControls.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridEquipment)).BeginInit();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPair)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel3
+            // pnlControls
             // 
-            this.panel3.Controls.Add(this.btnRemove);
-            this.panel3.Controls.Add(this.btnEdit);
-            this.panel3.Controls.Add(this.btnAdd);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(350, 47);
-            this.panel3.TabIndex = 1;
+            this.pnlControls.Controls.Add(this.btnRemove);
+            this.pnlControls.Controls.Add(this.btnEdit);
+            this.pnlControls.Controls.Add(this.btnAdd);
+            this.pnlControls.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlControls.Location = new System.Drawing.Point(0, 0);
+            this.pnlControls.Name = "pnlControls";
+            this.pnlControls.Size = new System.Drawing.Size(350, 47);
+            this.pnlControls.TabIndex = 1;
             // 
             // btnRemove
             // 
@@ -89,7 +93,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 237);
+            this.panel1.Location = new System.Drawing.Point(0, 300);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(350, 44);
             this.panel1.TabIndex = 2;
@@ -114,15 +118,6 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.gridEquipment);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 47);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(350, 190);
-            this.panel2.TabIndex = 3;
-            // 
             // gridEquipment
             // 
             this.gridEquipment.AllowUserToAddRows = false;
@@ -130,44 +125,103 @@
             this.gridEquipment.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.gridEquipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridEquipment.Location = new System.Drawing.Point(0, 0);
+            this.gridEquipment.Location = new System.Drawing.Point(0, 47);
             this.gridEquipment.Name = "gridEquipment";
             this.gridEquipment.ReadOnly = true;
-            this.gridEquipment.Size = new System.Drawing.Size(350, 190);
+            this.gridEquipment.Size = new System.Drawing.Size(350, 223);
             this.gridEquipment.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.edDate);
+            this.panel4.Controls.Add(this.numPair);
+            this.panel4.Controls.Add(this.chkAvailable);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 270);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(350, 30);
+            this.panel4.TabIndex = 1;
+            // 
+            // chkAvailable
+            // 
+            this.chkAvailable.AutoSize = true;
+            this.chkAvailable.Location = new System.Drawing.Point(12, 6);
+            this.chkAvailable.Name = "chkAvailable";
+            this.chkAvailable.Size = new System.Drawing.Size(97, 18);
+            this.chkAvailable.TabIndex = 0;
+            this.chkAvailable.Text = "Доступно на";
+            this.chkAvailable.UseVisualStyleBackColor = true;
+            this.chkAvailable.CheckedChanged += new System.EventHandler(this.chkAvailable_CheckedChanged);
+            // 
+            // numPair
+            // 
+            this.numPair.Location = new System.Drawing.Point(108, 4);
+            this.numPair.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numPair.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPair.Name = "numPair";
+            this.numPair.Size = new System.Drawing.Size(62, 22);
+            this.numPair.TabIndex = 1;
+            this.numPair.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPair.ValueChanged += new System.EventHandler(this.numPair_ValueChanged);
+            // 
+            // edDate
+            // 
+            this.edDate.Location = new System.Drawing.Point(177, 4);
+            this.edDate.Name = "edDate";
+            this.edDate.Size = new System.Drawing.Size(165, 22);
+            this.edDate.TabIndex = 2;
+            this.edDate.ValueChanged += new System.EventHandler(this.numPair_ValueChanged);
             // 
             // EquipmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 281);
-            this.Controls.Add(this.panel2);
+            this.ClientSize = new System.Drawing.Size(350, 344);
+            this.Controls.Add(this.gridEquipment);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.pnlControls);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EquipmentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Оборудование";
-            this.panel3.ResumeLayout(false);
+            this.pnlControls.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridEquipment)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPair)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView gridEquipment;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.CheckBox chkAvailable;
+        private System.Windows.Forms.DateTimePicker edDate;
+        private System.Windows.Forms.NumericUpDown numPair;
+        private System.Windows.Forms.Panel pnlControls;
     }
 }

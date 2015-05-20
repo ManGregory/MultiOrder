@@ -21,15 +21,20 @@ namespace MultiOrderWin
         public EquipmentForm()
         {
             InitializeComponent();
+            LoadEquipments();
             BindGrid();
-            BindingList<Equipment> gridBindingList = _db.Equipments.Local.ToBindingList();
-            gridBindingList.AllowEdit = gridBindingList.AllowNew = false;
-            gridBindingList.AllowRemove = true;
-            _gridBindingSource.DataSource = gridBindingList;
             gridEquipment.DataSource = _gridBindingSource;
         }
 
         private void BindGrid()
+        {
+            BindingList<Equipment> gridBindingList = _db.Equipments.Local.ToBindingList();
+            gridBindingList.AllowEdit = gridBindingList.AllowNew = false;
+            gridBindingList.AllowRemove = true;
+            _gridBindingSource.DataSource = gridBindingList;
+        }
+
+        private void LoadEquipments()
         {
             _db.Equipments.Include(e => e.Classroom).Load();
         }
@@ -71,7 +76,7 @@ namespace MultiOrderWin
                     if (addEquipmentForm.ShowDialog(this) == DialogResult.OK)
                     {
                         Save();
-                        BindGrid();
+                        LoadEquipments();
                         _gridBindingSource.ResetCurrentItem();
                     }
                 }
@@ -86,8 +91,30 @@ namespace MultiOrderWin
                 {
                     _db.Equipments.Add(addEquipmentForm.Equipment);
                     Save();
-                    BindGrid();
+                    LoadEquipments();
                 }
+            }
+        }
+
+        private void chkAvailable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkAvailable.Checked)
+            {                
+                _gridBindingSource.DataSource = DbHelper.GetAvailableEquipment((int)numPair.Value, edDate.Value, _db);
+            }
+            else
+            {
+                LoadEquipments();
+                BindGrid();
+            }
+            pnlControls.Enabled = !chkAvailable.Checked;
+        }
+
+        private void numPair_ValueChanged(object sender, EventArgs e)
+        {
+            if (chkAvailable.Checked)
+            {
+                _gridBindingSource.DataSource = DbHelper.GetAvailableEquipment((int)numPair.Value, edDate.Value, _db);
             }
         }
     }

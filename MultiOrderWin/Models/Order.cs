@@ -16,6 +16,13 @@ namespace MultiOrderWin.Models
         [Browsable(false)]
         public int Id { get; set; }
 
+        [Browsable(false)]
+        public int? ParentId { get; set; }
+
+        [Browsable(false)]
+        [ForeignKey("ParentId")]
+        public virtual Order ParentOrder { get; set; }
+
         [Required]
         [DataType(DataType.Date)]
         [DisplayName("Дата подачи заявки")]
