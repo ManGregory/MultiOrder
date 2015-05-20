@@ -33,5 +33,10 @@ namespace MultiOrderWin.Models
 
         [Browsable(false)]
         public static readonly Equipment Empty = new Equipment { Name = "" };
+
+        public override string ToString()
+        {
+            return string.Format("{0}", Name);
+        }
     }
 }

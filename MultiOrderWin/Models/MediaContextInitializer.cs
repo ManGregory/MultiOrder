@@ -18,6 +18,23 @@ namespace MultiOrderWin.Models
                     new User {Name = "admin", Password = "admin", IsAdmin = true},
                     new User {Name = "user", Password = "user", IsAdmin = false}
                 });
+            context.Classrooms.AddRange(
+                new[]
+                {
+                    new Classroom {Id = 1, Name = "301"},
+                    new Classroom {Id = 2, Name = "302"}
+                });
+            context.Equipments.AddRange(
+                new[]
+                {
+                    new Equipment {ClassroomId = 1, Name = "Ноутбук", Amount = 5},
+                    new Equipment {ClassroomId = null, Name = "Проектор", Amount = 5}
+                });
+            context.Semesters.AddRange(
+                new[]
+                {
+                    new Semester {BeginDate = DateTime.Parse("01.01.2015"), EndDate = DateTime.Parse("31.06.2015")}
+                });
             context.SaveChanges();
         }
     }

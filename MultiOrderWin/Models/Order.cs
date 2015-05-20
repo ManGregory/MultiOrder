@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MultiOrderWin.Models
 {
-    class Order
+    public class Order
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -47,7 +47,7 @@ namespace MultiOrderWin.Models
         [DisplayName("Оборудование")]
         public Equipment Equipment { get; set; }
 
-        [Browsable(false)]
+        [DisplayName("Количество")]
         public int Amount { get; set; }
 
         [Browsable(false)]
@@ -55,5 +55,8 @@ namespace MultiOrderWin.Models
 
         [DisplayName("Период")]
         public string Period { get; set; }
+
+        [DisplayName("Учебная неделя")]
+        public string WeekNumber { get; set; }
     }
 }

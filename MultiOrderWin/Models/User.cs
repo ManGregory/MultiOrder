@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MultiOrderWin.Models
 {
-    class User
+    public class User
     {
         [Browsable(false)]
         [Key]
@@ -29,5 +29,10 @@ namespace MultiOrderWin.Models
 
         [DisplayName("Админ")]
         public bool IsAdmin { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}", Name);
+        }
     }
 }

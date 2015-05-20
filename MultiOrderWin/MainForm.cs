@@ -15,14 +15,20 @@ namespace MultiOrderWin
     public partial class MainForm : Form
     {
         private MediaContext _db = new MediaContext();
-        private readonly LoginForm _form;
+        private readonly LoginForm _loginForm;
+        private BindingSource _bindingSource = new BindingSource();
 
-        public MainForm(LoginForm form)
+        public MainForm(LoginForm loginForm)
         {
             InitializeComponent();
-            _form = form;
-            Closed += (sender, args) => _form.Close();
-            gridOrders.DataSource = _db.Orders.Local.ToBindingList();
+            _loginForm = loginForm;
+            Closed += (sender, args) => _loginForm.Close();
+            BindGrid();
+            var bindingList = _db.Orders.Local.ToBindingList();
+            bindingList.AllowEdit = bindingList.AllowNew = false;
+            _bindingSource.PositionChanged += (sender, args) => UpdateEnabled();
+            _bindingSource.DataSource = bindingList;            
+            gridOrders.DataSource = _bindingSource;
             SetRights();
         }
 
@@ -64,6 +70,103 @@ namespace MultiOrderWin
             {
                 usersForm.ShowDialog(this);
             }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            using (var addOrderForm = new AddOrderForm())
+            {
+                if (addOrderForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    _db.Orders.Add(addOrderForm.Order);
+                    Save();
+                    BindGrid();
+                }
+            }
+        }
+
+        private void BindGrid()
+        {
+            _db.Orders.Include(o => o.Classroom).Include(o => o.Equipment).Include(o => o.User).Load();
+        }
+
+        private void Save()
+        {
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order))
+            {
+                if (addOrderForm.ShowDialog(this) == DialogResult.OK)
+                {    
+                    Save();
+                    BindGrid();
+                    _bindingSource.ResetCurrentItem();
+                }
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            var order = _bindingSource.Current as Order;
+            if ((order != null) && (!order.IsSigned))
+            {
+                _db.Orders.Remove(order);
+                Save();
+                UpdateEnabled();
+                gridOrders.Refresh();
+            }
+        }
+
+        private void UpdateEnabled()
+        {
+            var order = _bindingSource.Current as Order;
+            if (order != null)
+            {
+                btnRemove.Enabled =
+                    btnEdit.Enabled =
+                        ((Current.CurrentUser.IsAdmin) && (!order.IsSigned)) ||
+                        ((Current.CurrentUser.Id == order.UserId) && (!order.IsSigned));
+                btnSign.Enabled = (Current.CurrentUser.IsAdmin);
+                btnSign.Text = order.IsSigned ? "Отменить утверждение" : "Утвердить";
+            }
+        }
+
+        private void btnSign_Click(object sender, EventArgs e)
+        {
+            var order = _bindingSource.Current as Order;
+            if ((order != null))
+            {
+                order.IsSigned = !order.IsSigned;                
+                Save();
+                UpdateEnabled();
+                gridOrders.Refresh();
+            }
+        }
+
+        private void gridOrders_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            var order = _bindingSource[e.RowIndex] as Order;
+            if (order != null)
+            {
+                if (order.IsSigned)
+                {
+                    gridOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = new DataGridViewCellStyle { ForeColor = Color.Orange, BackColor = Color.Blue };
+                }
+                else
+                {
+                    gridOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = gridOrders.DefaultCellStyle;
+                }
+            }            
         }
     }
 }
