@@ -38,6 +38,11 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.grpEquipments = new System.Windows.Forms.GroupBox();
             this.gridEquipments = new System.Windows.Forms.DataGridView();
+            this.EquipmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EquipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsFromClassroom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbPeriods = new System.Windows.Forms.ComboBox();
             this.cmbWeeks = new System.Windows.Forms.ComboBox();
             this.cmbClassrooms = new System.Windows.Forms.ComboBox();
@@ -50,11 +55,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.EquipmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EquipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsFromClassroom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.grpOrderInfo.SuspendLayout();
@@ -137,6 +137,7 @@
             this.btnRemove.TabIndex = 17;
             this.btnRemove.Text = "Удалить";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnEdit
             // 
@@ -186,6 +187,40 @@
             this.gridEquipments.Size = new System.Drawing.Size(285, 101);
             this.gridEquipments.TabIndex = 0;
             this.gridEquipments.SelectionChanged += new System.EventHandler(this.gridEquipments_SelectionChanged);
+            // 
+            // EquipmentName
+            // 
+            this.EquipmentName.HeaderText = "Оборудование";
+            this.EquipmentName.Name = "EquipmentName";
+            this.EquipmentName.ReadOnly = true;
+            this.EquipmentName.Width = 140;
+            // 
+            // Amount
+            // 
+            this.Amount.HeaderText = "Количество";
+            this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
+            // 
+            // OrderId
+            // 
+            this.OrderId.HeaderText = "Column1";
+            this.OrderId.Name = "OrderId";
+            this.OrderId.ReadOnly = true;
+            this.OrderId.Visible = false;
+            // 
+            // EquipmentId
+            // 
+            this.EquipmentId.HeaderText = "Column1";
+            this.EquipmentId.Name = "EquipmentId";
+            this.EquipmentId.ReadOnly = true;
+            this.EquipmentId.Visible = false;
+            // 
+            // IsFromClassroom
+            // 
+            this.IsFromClassroom.HeaderText = "Column1";
+            this.IsFromClassroom.Name = "IsFromClassroom";
+            this.IsFromClassroom.ReadOnly = true;
+            this.IsFromClassroom.Visible = false;
             // 
             // cmbPeriods
             // 
@@ -318,40 +353,6 @@
             this.label1.Size = new System.Drawing.Size(78, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "Дата подачи";
-            // 
-            // EquipmentName
-            // 
-            this.EquipmentName.HeaderText = "Оборудование";
-            this.EquipmentName.Name = "EquipmentName";
-            this.EquipmentName.ReadOnly = true;
-            this.EquipmentName.Width = 140;
-            // 
-            // Amount
-            // 
-            this.Amount.HeaderText = "Количество";
-            this.Amount.Name = "Amount";
-            this.Amount.ReadOnly = true;
-            // 
-            // OrderId
-            // 
-            this.OrderId.HeaderText = "Column1";
-            this.OrderId.Name = "OrderId";
-            this.OrderId.ReadOnly = true;
-            this.OrderId.Visible = false;
-            // 
-            // EquipmentId
-            // 
-            this.EquipmentId.HeaderText = "Column1";
-            this.EquipmentId.Name = "EquipmentId";
-            this.EquipmentId.ReadOnly = true;
-            this.EquipmentId.Visible = false;
-            // 
-            // IsFromClassroom
-            // 
-            this.IsFromClassroom.HeaderText = "Column1";
-            this.IsFromClassroom.Name = "IsFromClassroom";
-            this.IsFromClassroom.ReadOnly = true;
-            this.IsFromClassroom.Visible = false;
             // 
             // AddOrderForm
             // 

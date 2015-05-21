@@ -112,6 +112,12 @@
     <Compile Include="Models\OrdersEquipment.cs" />
     <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="OrderUserReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderUserReport.Designer.cs">
+      <DependentUpon>OrderUserReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SemesterForm.cs">
@@ -149,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderUserReport.resx">
+      <DependentUpon>OrderUserReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -276,5 +276,18 @@ namespace MultiOrderWin
         {
             SetWeekNumber();
         }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (gridEquipments.CurrentRow != null)
+            {
+                var orderId = (int) gridEquipments.CurrentRow.Cells["OrderId"].Value;
+                var equipmentId = (int) gridEquipments.CurrentRow.Cells["EquipmentId"].Value;
+                var currentOrderEquipment =
+                    Order.OrdersEquipment.FirstOrDefault(o => o.OrderId == orderId && o.EquipmentId == equipmentId);
+                Order.OrdersEquipment.Remove(currentOrderEquipment);
+                BindEquipments();
+            }
+        }
     }
 }

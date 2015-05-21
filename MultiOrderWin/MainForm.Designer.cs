@@ -40,6 +40,8 @@
             this.miRef = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.miReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrderUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -71,6 +73,7 @@
             this.msMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miFile,
             this.miCatalogs,
+            this.miReports,
             this.miHelp});
             this.msMain.Location = new System.Drawing.Point(0, 0);
             this.msMain.Name = "msMain";
@@ -158,6 +161,21 @@
             this.miAbout.Name = "miAbout";
             this.miAbout.Size = new System.Drawing.Size(149, 22);
             this.miAbout.Text = "О программе";
+            // 
+            // miReports
+            // 
+            this.miReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miOrderUsers});
+            this.miReports.Name = "miReports";
+            this.miReports.Size = new System.Drawing.Size(60, 20);
+            this.miReports.Text = "Отчеты";
+            // 
+            // miOrderUsers
+            // 
+            this.miOrderUsers.Name = "miOrderUsers";
+            this.miOrderUsers.Size = new System.Drawing.Size(317, 22);
+            this.miOrderUsers.Text = "Количество заявок в разрезе пользователей";
+            this.miOrderUsers.Click += new System.EventHandler(this.miOrderUsers_Click);
             // 
             // pnlMain
             // 
@@ -367,6 +385,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
         private System.Windows.Forms.Button btnView;
+        private System.Windows.Forms.ToolStripMenuItem miReports;
+        private System.Windows.Forms.ToolStripMenuItem miOrderUsers;
     }
 }
 

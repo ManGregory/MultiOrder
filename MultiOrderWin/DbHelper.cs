@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using MultiOrderWin.Models;
@@ -58,6 +60,19 @@ namespace MultiOrderWin
                 new SqlParameter("@fromPair", fromPair),
                 new SqlParameter("@toPair", toPair));
             return equipments.Where(e => e.Amount > 0).ToList();
+        }
+
+        public static IEnumerable<OrderUser> GetUsersOrderInMonths(int year, MediaContext db)
+        {
+            List<OrderUser> usersOrder = db.Database.SqlQuery<OrderUser>(
+                "select DATEPART(MONTH, o.Date) as month, u.Name, count(o.Id) as count " +
+                "from Orders o " +
+                "   join Users u on u.Id = o.UserId " +
+                "where " +
+                "   o.IsSigned = 1 and DATEPART(YEAR, o.Date) = @year " +
+                "group by DATEPART(MONTH, o.Date), u.Name ",
+                new SqlParameter("@year", year)).ToList();
+            return usersOrder;
         }
 
         private static int WeekOfYearISO8601(DateTime date)
@@ -125,5 +140,26 @@ namespace MultiOrderWin
                 date = date.AddDays(7);
             }
         }
+    }
+
+    public class OrderUser 
+    {
+        [DisplayName("Пользователь")]
+        public string Name { get; set; }
+
+        [DisplayName("Месяц")]
+        public string MonthName
+        {
+            get
+            {
+                return CultureInfo.GetCultureInfoByIetfLanguageTag("ru")
+                    .DateTimeFormat.MonthNames[Month - 1];
+            }
+        }
+
+        [Browsable(false)]
+        public int Month { get; set; }
+        [DisplayName("Количество заявок")]
+        public int Count { get; set; }
     }
 }

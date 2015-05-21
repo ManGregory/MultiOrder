@@ -37,7 +37,7 @@ namespace MultiOrderWin
         {
             if (!Current.CurrentUser.IsAdmin)
             {
-                miCatalogs.Visible = false;
+                miCatalogs.Visible = miReports.Visible = false;
             }
         }
 
@@ -244,10 +244,15 @@ namespace MultiOrderWin
         {
             using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, false))
             {
-                if (addOrderForm.ShowDialog(this) == DialogResult.OK)
-                {
-                    
-                }
+                addOrderForm.ShowDialog();
+            }
+        }
+
+        private void miOrderUsers_Click(object sender, EventArgs e)
+        {
+            using (var reportForn = new OrderUserReport())
+            {
+                reportForn.ShowDialog(this);
             }
         }
     }
