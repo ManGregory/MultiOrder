@@ -153,9 +153,19 @@ namespace MultiOrderWin
             if ((order != null) && (!order.IsSigned))
             {
                 _db.Orders.Remove(order);
+                //RemoveLinked(order);
                 Save();
                 UpdateEnabled();
                 gridOrders.Refresh();
+                LoadEquipment(null);
+            }
+        }
+
+        private void RemoveLinked(Order order)
+        {
+            foreach (var o in _db.Orders.Where(o1 => o1.ParentId == order.Id))
+            {
+                _db.Orders.Remove(o);
             }
         }
 
@@ -178,10 +188,19 @@ namespace MultiOrderWin
             var order = _bindingSource.Current as Order;
             if ((order != null))
             {
-                order.IsSigned = !order.IsSigned;                
+                order.IsSigned = !order.IsSigned;
+                SignLinked(order);
                 Save();
                 UpdateEnabled();
                 gridOrders.Refresh();
+            }
+        }
+
+        private void SignLinked(Order order)
+        {
+            foreach (var o in _db.Orders.Where(or1 => or1.ParentId == order.Id))
+            {
+                o.IsSigned = order.IsSigned;
             }
         }
 
@@ -190,14 +209,10 @@ namespace MultiOrderWin
             var order = _bindingSource[e.RowIndex] as Order;
             if (order != null)
             {
-                if (order.IsSigned)
-                {
-                    gridOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = new DataGridViewCellStyle { ForeColor = Color.Orange, BackColor = Color.Blue };
-                }
-                else
-                {
-                    gridOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = gridOrders.DefaultCellStyle;
-                }
+                gridOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Style =
+                    order.IsSigned
+                        ? new DataGridViewCellStyle {ForeColor = Color.Black, BackColor = Color.LightGreen}
+                        : gridOrders.DefaultCellStyle;
             }            
         }
 
@@ -210,15 +225,18 @@ namespace MultiOrderWin
         private void LoadEquipment(Order order)
         {
             gridEquipment.Rows.Clear();
-            var equipments =
-                _db.OrdersEquipments.Include(oe => oe.Equipment).Where(oe => oe.OrderId == order.Id).ToList();
-            foreach (var equipment in equipments)
+            if (order != null)
             {
-                var row = new DataGridViewRow();
-                row.Cells.AddRange(
-                    new DataGridViewTextBoxCell {Value = equipment.Equipment.Name},
-                    new DataGridViewTextBoxCell {Value = equipment.Amount});
-                gridEquipment.Rows.Add(row);
+                var equipments =
+                    _db.OrdersEquipments.Include(oe => oe.Equipment).Where(oe => oe.OrderId == order.Id).ToList();
+                foreach (var equipment in equipments)
+                {
+                    var row = new DataGridViewRow();
+                    row.Cells.AddRange(
+                        new DataGridViewTextBoxCell {Value = equipment.Equipment.Name},
+                        new DataGridViewTextBoxCell {Value = equipment.Amount});
+                    gridEquipment.Rows.Add(row);
+                }
             }
         }
 

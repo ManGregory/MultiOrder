@@ -42,5 +42,13 @@ namespace MultiOrderWin
         {
             Close();
         }
+
+        private void btnConfig_Click(object sender, System.EventArgs e)
+        {
+            using (var configForm = new ConfigForm())
+            {
+                configForm.ShowDialog(this);
+            }
+        }
     }
 }
