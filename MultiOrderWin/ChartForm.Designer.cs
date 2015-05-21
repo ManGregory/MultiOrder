@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.edDate = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbPeriod = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.wb = new System.Windows.Forms.WebBrowser();
-            this.cmbPeriod = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.edDate = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +50,32 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(596, 42);
             this.panel1.TabIndex = 0;
+            // 
+            // edDate
+            // 
+            this.edDate.Location = new System.Drawing.Point(55, 11);
+            this.edDate.Name = "edDate";
+            this.edDate.Size = new System.Drawing.Size(206, 22);
+            this.edDate.TabIndex = 3;
+            this.edDate.ValueChanged += new System.EventHandler(this.edDate_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 14);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Дата:";
+            // 
+            // cmbPeriod
+            // 
+            this.cmbPeriod.FormattingEnabled = true;
+            this.cmbPeriod.Location = new System.Drawing.Point(327, 11);
+            this.cmbPeriod.Name = "cmbPeriod";
+            this.cmbPeriod.Size = new System.Drawing.Size(243, 22);
+            this.cmbPeriod.TabIndex = 1;
+            this.cmbPeriod.SelectedIndexChanged += new System.EventHandler(this.cmbPeriod_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -77,32 +103,7 @@
             this.wb.Name = "wb";
             this.wb.Size = new System.Drawing.Size(596, 256);
             this.wb.TabIndex = 0;
-            // 
-            // cmbPeriod
-            // 
-            this.cmbPeriod.FormattingEnabled = true;
-            this.cmbPeriod.Location = new System.Drawing.Point(327, 11);
-            this.cmbPeriod.Name = "cmbPeriod";
-            this.cmbPeriod.Size = new System.Drawing.Size(243, 22);
-            this.cmbPeriod.TabIndex = 1;
-            this.cmbPeriod.SelectedIndexChanged += new System.EventHandler(this.cmbPeriod_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 14);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 14);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Дата:";
-            // 
-            // edDate
-            // 
-            this.edDate.Location = new System.Drawing.Point(55, 11);
-            this.edDate.Name = "edDate";
-            this.edDate.Size = new System.Drawing.Size(206, 22);
-            this.edDate.TabIndex = 3;
-            this.edDate.ValueChanged += new System.EventHandler(this.edDate_ValueChanged);
+            this.wb.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.wb_Navigated);
             // 
             // ChartForm
             // 

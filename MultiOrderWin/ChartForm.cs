@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Threading;
+using System.Windows.Forms;
 
 namespace MultiOrderWin
 {
@@ -8,9 +9,9 @@ namespace MultiOrderWin
         {
             InitializeComponent();
             wb.Navigate("about:blank");
-            wb.DocumentText = "";
-            cmbPeriod.Items.AddRange(new []{"Неделя", "Месяц", "Семестр"});
+            cmbPeriod.Items.AddRange(new []{"Неделя", "Месяц", "Семестр"});            
             cmbPeriod.SelectedIndex = 0;
+            Thread.Sleep(1000);
         }
 
         private void cmbPeriod_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -26,6 +27,10 @@ namespace MultiOrderWin
         private void edDate_ValueChanged(object sender, System.EventArgs e)
         {
             LoadChart();
+        }
+
+        private void wb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+        {
         }
     }
 }
