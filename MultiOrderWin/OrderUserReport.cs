@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MultiOrderWin.Models;
 
@@ -24,6 +18,9 @@ namespace MultiOrderWin
             LoadReport();
         }
 
+        /// <summary>
+        /// Загрузка отчета из базы
+        /// </summary>
         private void LoadReport()
         {            
             using (var db = new MediaContext())

@@ -36,12 +36,13 @@
             this.miClassrooms = new System.Windows.Forms.ToolStripMenuItem();
             this.miSemesters = new System.Windows.Forms.ToolStripMenuItem();
             this.miUsers = new System.Windows.Forms.ToolStripMenuItem();
+            this.miReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrderUsers = new System.Windows.Forms.ToolStripMenuItem();
+            this.miChartMulti = new System.Windows.Forms.ToolStripMenuItem();
             this.miHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.miRef = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.miReports = new System.Windows.Forms.ToolStripMenuItem();
-            this.miOrderUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -50,12 +51,15 @@
             this.EquipmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.btnView = new System.Windows.Forms.Button();
             this.btnSign = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.pnlBottom = new System.Windows.Forms.Panel();
             this.msMain.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -93,8 +97,9 @@
             // miClose
             // 
             this.miClose.Name = "miClose";
-            this.miClose.Size = new System.Drawing.Size(108, 22);
+            this.miClose.Size = new System.Drawing.Size(152, 22);
             this.miClose.Text = "Выход";
+            this.miClose.Click += new System.EventHandler(this.miClose_Click);
             // 
             // miCatalogs
             // 
@@ -135,6 +140,29 @@
             this.miUsers.Text = "Пользователи";
             this.miUsers.Click += new System.EventHandler(this.miUsers_Click);
             // 
+            // miReports
+            // 
+            this.miReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miOrderUsers,
+            this.miChartMulti});
+            this.miReports.Name = "miReports";
+            this.miReports.Size = new System.Drawing.Size(60, 20);
+            this.miReports.Text = "Отчеты";
+            // 
+            // miOrderUsers
+            // 
+            this.miOrderUsers.Name = "miOrderUsers";
+            this.miOrderUsers.Size = new System.Drawing.Size(317, 22);
+            this.miOrderUsers.Text = "Количество заявок в разрезе пользователей";
+            this.miOrderUsers.Click += new System.EventHandler(this.miOrderUsers_Click);
+            // 
+            // miChartMulti
+            // 
+            this.miChartMulti.Name = "miChartMulti";
+            this.miChartMulti.Size = new System.Drawing.Size(317, 22);
+            this.miChartMulti.Text = "График мультимедиа заявок";
+            this.miChartMulti.Click += new System.EventHandler(this.miChartMulti_Click);
+            // 
             // miHelp
             // 
             this.miHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -162,26 +190,10 @@
             this.miAbout.Size = new System.Drawing.Size(149, 22);
             this.miAbout.Text = "О программе";
             // 
-            // miReports
-            // 
-            this.miReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miOrderUsers});
-            this.miReports.Name = "miReports";
-            this.miReports.Size = new System.Drawing.Size(60, 20);
-            this.miReports.Text = "Отчеты";
-            // 
-            // miOrderUsers
-            // 
-            this.miOrderUsers.Name = "miOrderUsers";
-            this.miOrderUsers.Size = new System.Drawing.Size(317, 22);
-            this.miOrderUsers.Text = "Количество заявок в разрезе пользователей";
-            this.miOrderUsers.Click += new System.EventHandler(this.miOrderUsers_Click);
-            // 
             // pnlMain
             // 
             this.pnlMain.Controls.Add(this.panel2);
             this.pnlMain.Controls.Add(this.panel1);
-            this.pnlMain.Controls.Add(this.pnlBottom);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 24);
             this.pnlMain.Name = "pnlMain";
@@ -194,7 +206,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 58);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1026, 251);
+            this.panel2.Size = new System.Drawing.Size(1026, 312);
             this.panel2.TabIndex = 4;
             // 
             // splitContainer1
@@ -210,7 +222,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gridEquipment);
-            this.splitContainer1.Size = new System.Drawing.Size(1026, 251);
+            this.splitContainer1.Size = new System.Drawing.Size(1026, 312);
             this.splitContainer1.SplitterDistance = 765;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -224,7 +236,7 @@
             this.gridOrders.Location = new System.Drawing.Point(0, 0);
             this.gridOrders.Name = "gridOrders";
             this.gridOrders.ReadOnly = true;
-            this.gridOrders.Size = new System.Drawing.Size(765, 251);
+            this.gridOrders.Size = new System.Drawing.Size(765, 312);
             this.gridOrders.TabIndex = 0;
             this.gridOrders.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridOrders_CellFormatting);
             this.gridOrders.SelectionChanged += new System.EventHandler(this.gridOrders_SelectionChanged);
@@ -242,7 +254,7 @@
             this.gridEquipment.Location = new System.Drawing.Point(0, 0);
             this.gridEquipment.Name = "gridEquipment";
             this.gridEquipment.ReadOnly = true;
-            this.gridEquipment.Size = new System.Drawing.Size(257, 251);
+            this.gridEquipment.Size = new System.Drawing.Size(257, 312);
             this.gridEquipment.TabIndex = 0;
             // 
             // EquipmentName
@@ -260,6 +272,10 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.btnView);
             this.panel1.Controls.Add(this.btnSign);
             this.panel1.Controls.Add(this.btnRemove);
@@ -270,6 +286,42 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1026, 58);
             this.panel1.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(559, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(92, 14);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "- Новые заявки";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.White;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Location = new System.Drawing.Point(533, 18);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(20, 19);
+            this.panel4.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(707, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(142, 14);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "- Утвержденные заявки";
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.LightGreen;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Location = new System.Drawing.Point(681, 18);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(20, 19);
+            this.panel3.TabIndex = 5;
             // 
             // btnView
             // 
@@ -321,14 +373,6 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // pnlBottom
-            // 
-            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 309);
-            this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(1026, 61);
-            this.pnlBottom.TabIndex = 1;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -352,6 +396,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridEquipment)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -372,7 +417,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem miAbout;
         private System.Windows.Forms.Panel pnlMain;
-        private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnAdd;
@@ -387,6 +431,11 @@
         private System.Windows.Forms.Button btnView;
         private System.Windows.Forms.ToolStripMenuItem miReports;
         private System.Windows.Forms.ToolStripMenuItem miOrderUsers;
+        private System.Windows.Forms.ToolStripMenuItem miChartMulti;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel3;
     }
 }
 

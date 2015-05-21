@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
+﻿using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 
 namespace MultiOrderWin.Models
@@ -32,6 +26,7 @@ namespace MultiOrderWin.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            // создание связи "многие ко многим" для заявок и оборудования
             modelBuilder.Entity<OrdersEquipment>()
                 .HasKey(cp => new { cp.OrderId, cp.EquipmentId });
 

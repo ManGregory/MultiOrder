@@ -18,6 +18,9 @@ namespace MultiOrderWin
             Text = "Добавление оборудования";
         }
 
+        /// <summary>
+        /// Загрузка аудиторий в выпадающий список
+        /// </summary>
         private void BindClassroms()
         {
             _db.Classrooms.Load();
@@ -33,6 +36,10 @@ namespace MultiOrderWin
             LoadEquipment(equipment);
         }
 
+        /// <summary>
+        /// Заполнение элементов формы
+        /// </summary>
+        /// <param name="equipment"></param>
         private void LoadEquipment(Equipment equipment)
         {
             txtName.Text = equipment.Name;
@@ -40,6 +47,10 @@ namespace MultiOrderWin
             SelectClassroom(equipment.Classroom);
         }
 
+        /// <summary>
+        /// Выбор аудитории в выпадающем списке
+        /// </summary>
+        /// <param name="classroom"></param>
         private void SelectClassroom(Classroom classroom)
         {
             foreach (var item in cmbClassrooms.Items)
@@ -52,6 +63,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Сохранение оборудования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (Equipment == null) Equipment = new Equipment();

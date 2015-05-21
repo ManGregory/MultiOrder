@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MultiOrderWin.Models;
 
@@ -18,7 +12,13 @@ namespace MultiOrderWin
 
         private MediaContext _db = new MediaContext();
 
+        /// <summary>
+        /// Данные заявки, с какой по какую пары, дата заявки
+        /// </summary>
         private Tuple<int, int, DateTime> _orderParams;
+        /// <summary>
+        /// Список оборудования которое уже добавлено в заявку
+        /// </summary>
         private List<Equipment> _addedEquipments = new List<Equipment>();
 
         public AddEquipmentToOrderForm(List<Equipment> addedEquipments, Tuple<int, int, DateTime> orderParams)
@@ -30,12 +30,15 @@ namespace MultiOrderWin
             BindEquipments();
         }
 
+        /// <summary>
+        /// Загрузка доступного оборудования
+        /// </summary>
         private void BindEquipments()
         {
-            //_db.Equipments.Load();
-            //cmbEquipment.DataSource = _db.Equipments.Local.ToList();
+            // Получаем доступное оборудование по указанным параметрам
             var availableEquipment = DbHelper.GetAvailableEquipment(_orderParams.Item1, _orderParams.Item2,
                 _orderParams.Item3, _db).ToList();
+            // Убираем оборудование, которое уже есть в заявке
             availableEquipment =
                 availableEquipment.Where(
                     a =>
@@ -43,12 +46,19 @@ namespace MultiOrderWin
             cmbEquipment.DataSource = availableEquipment;
         }
 
+        /// <summary>
+        /// Редактирование заявляемого оборудования
+        /// </summary>
+        /// <param name="ordersEquipment">Заявляемое оборудование</param>
+        /// <param name="addedEquipments">Оборудование, которое уже заявлено</param>
+        /// <param name="orderParams">Параметры заявки</param>
         public AddEquipmentToOrderForm(OrdersEquipment ordersEquipment, List<Equipment> addedEquipments, Tuple<int, int, DateTime> orderParams)
             : this(addedEquipments, orderParams)
         {
             OrdersEquipment = ordersEquipment;
             if (OrdersEquipment != null)
             {
+                // вставка редактируемого оборудования в список для отображения
                 var availableEquipment = cmbEquipment.DataSource as List<Equipment>;
                 if (availableEquipment != null)
                     availableEquipment.Insert(0, _db.Equipments.Find(OrdersEquipment.EquipmentId));
@@ -59,12 +69,18 @@ namespace MultiOrderWin
             LoadOrderEquipment();
         }
 
+        /// <summary>
+        /// Заполнение элементов формы
+        /// </summary>
         private void LoadOrderEquipment()
         {
             numAmount.Value = OrdersEquipment.Amount;
             SelectEquipment();
         }
 
+        /// <summary>
+        /// Выбор оборудования из списка
+        /// </summary>
         private void SelectEquipment()
         {
             foreach (var item in cmbEquipment.Items)
@@ -83,10 +99,17 @@ namespace MultiOrderWin
             Close();
         }
 
+        /// <summary>
+        /// Сохранение
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
+            // проверка количества
             if (CheckAmount())
             {
+                // заполнение данных
                 if (OrdersEquipment == null) OrdersEquipment = new OrdersEquipment();
                 OrdersEquipment.Amount = (int) numAmount.Value;
                 var equipment = cmbEquipment.SelectedItem as Equipment;
@@ -106,6 +129,10 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Проверка заявляемого количества
+        /// </summary>
+        /// <returns></returns>
         private bool CheckAmount()
         {
             var res = true;
@@ -120,6 +147,11 @@ namespace MultiOrderWin
             return res;
         }
 
+        /// <summary>
+        /// Загрузка доступного количества
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbEquipment_SelectedIndexChanged(object sender, EventArgs e)
         {
             var equipment = cmbEquipment.SelectedItem as Equipment;

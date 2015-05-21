@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Entity;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MultiOrderWin.Models;
 using MultiOrderWin.Properties;
@@ -21,6 +15,7 @@ namespace MultiOrderWin
         public SemesterForm()
         {
             InitializeComponent();
+            // загрузка семестров из базы
             _db.Semesters.Load();
             BindingList<Semester> gridBindingList = _db.Semesters.Local.ToBindingList();
             _gridBindingSource.DataSource = gridBindingList;

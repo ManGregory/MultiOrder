@@ -17,8 +17,11 @@ namespace MultiOrderWin
         public ConfigForm()
         {
             InitializeComponent();
+            // получаем текущую строку подключения из файла конфигурации
             var connectionString = ConfigurationManager.ConnectionStrings["MultiOrderConnectionString"].ConnectionString;
+            // создаем класс для построения строки подключения
             var builder = new SqlConnectionStringBuilder(connectionString);
+            // заполняем элементы интерфейса 
             txtServerName.Text = builder.DataSource;
             txtDbName.Text = builder.InitialCatalog;
             txtUserName.Text = builder.UserID;
@@ -33,8 +36,14 @@ namespace MultiOrderWin
                     !chkWindowsAuthentification.Checked;
         }
 
+        /// <summary>
+        /// Сохранение строки подключения в файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
+            // создаем клас для построения строки подключения
             var builder = new SqlConnectionStringBuilder
             {
                 DataSource = txtServerName.Text,
@@ -43,6 +52,7 @@ namespace MultiOrderWin
                 UserID = txtUserName.Text,
                 Password = txtPassword.Text
             };
+            // сохраняем строку в файл
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
             connectionStringsSection.ConnectionStrings["MultiOrderConnectionString"].ConnectionString =

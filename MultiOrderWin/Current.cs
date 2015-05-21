@@ -8,6 +8,9 @@ using MultiOrderWin.Models;
 
 namespace MultiOrderWin
 {
+    /// <summary>
+    /// Класс для хранения информации по текущему пользователю
+    /// </summary>
     static class Current
     {
         public static User CurrentUser { get; set; }

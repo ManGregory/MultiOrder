@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace MultiOrderWin.Models
 {
+    /// <summary>
+    /// Таблица представляющая связть многие ко многим
+    /// </summary>
     public class OrdersEquipment
     {
         [Browsable(false)]

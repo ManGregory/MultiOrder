@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MultiOrderWin.Models;
 
@@ -23,24 +19,33 @@ namespace MultiOrderWin
             _loginForm = loginForm;
             Closed += (sender, args) => _loginForm.Close();
             BindGrid();
+            // загрузка заявок из базы
             var bindingList = _db.Orders.Local.ToBindingList();
             bindingList.AllowEdit = bindingList.AllowNew = false;
             _bindingSource.PositionChanged += (sender, args) => UpdateEnabled();
             _bindingSource.DataSource = bindingList;            
             gridOrders.DataSource = _bindingSource;
             var dataGridViewColumn = gridOrders.Columns["Date"];
+            // изменение формата даты
             if (dataGridViewColumn != null) dataGridViewColumn.DefaultCellStyle.Format = "D";
+            // изменение интерфейса в зависимости от прав пользователя
             SetRights();
         }
 
         private void SetRights()
         {
+            // Пользователи не могут видет отчеты и справочники
             if (!Current.CurrentUser.IsAdmin)
             {
                 miCatalogs.Visible = miReports.Visible = false;
             }
         }
 
+        /// <summary>
+        /// Вызов формы для ввода семестров
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void miSemesters_Click(object sender, EventArgs e)
         {
             using (var semesterForm = new SemesterForm())
@@ -49,6 +54,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Вызов формы для ввода аудиторий
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void miClassrooms_Click(object sender, EventArgs e)
         {
             using (var classroomForm = new ClassroomForm())
@@ -57,6 +67,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Вызов формы для ввода оборудования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void miEquipment_Click(object sender, EventArgs e)
         {
             using (var equipmentForm = new EquipmentForm())
@@ -65,6 +80,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Вызов форма для ввода пользователей
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void miUsers_Click(object sender, EventArgs e)
         {
             using (var usersForm = new UsersForm())
@@ -73,6 +93,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Добавление заявки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
             using (var addOrderForm = new AddOrderForm())
@@ -86,12 +111,18 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Добавление заявки базу в зависимости от периодов
+        /// </summary>
+        /// <param name="order"></param>
         private void AddOrder(Order order)
         {
             if (order.Period.Contains("Месяц") || order.Period.Contains("Семестр"))
             {
+                // добавляем исходную заявку
                 _db.Orders.Add(order);
                 _db.SaveChanges();
+                // добавляем все остальные заявки в зависимотси от периода
                 AddOrderForPeriod(order);
             }
             else
@@ -100,16 +131,22 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Добавляем заявки на указанный период
+        /// </summary>
+        /// <param name="order"></param>
         private void AddOrderForPeriod(Order order)
         {
             var date = order.Date.AddDays(7);
             DateTime endDate = date;
             if (order.Period.Contains("Месяц"))
             {
+                // конечная дата + 1 месяц
                 endDate = order.Date.AddMonths(1);                             
             } 
             else if (order.Period.Contains("Семестр"))
             {
+                // конечная дата из базы
                 var firstOrDefault = _db.Semesters.FirstOrDefault(s => order.Date >= s.BeginDate && order.Date <= s.EndDate);
                 if (firstOrDefault != null)
                     endDate = firstOrDefault.EndDate;
@@ -117,11 +154,17 @@ namespace MultiOrderWin
             DbHelper.AddMultipleOrders(order, date, endDate, _db);
         }
 
+        /// <summary>
+        /// Загрузка заявок
+        /// </summary>
         private void BindGrid()
         {
             _db.Orders.Include(o => o.Classroom).Include(o => o.User).Load();
         }
 
+        /// <summary>
+        /// Сохранение информации в базу
+        /// </summary>
         private void Save()
         {
             try
@@ -134,6 +177,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Редактирование существующей заявки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEdit_Click(object sender, EventArgs e)
         {
             using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, true))
@@ -147,13 +195,17 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Удаление заявки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRemove_Click(object sender, EventArgs e)
         {
             var order = _bindingSource.Current as Order;
             if ((order != null) && (!order.IsSigned))
             {
                 _db.Orders.Remove(order);
-                //RemoveLinked(order);
                 Save();
                 UpdateEnabled();
                 gridOrders.Refresh();
@@ -161,19 +213,15 @@ namespace MultiOrderWin
             }
         }
 
-        private void RemoveLinked(Order order)
-        {
-            foreach (var o in _db.Orders.Where(o1 => o1.ParentId == order.Id))
-            {
-                _db.Orders.Remove(o);
-            }
-        }
-
+        /// <summary>
+        /// Обновление интерфейса
+        /// </summary>
         private void UpdateEnabled()
         {
             var order = _bindingSource.Current as Order;
             if (order != null)
             {
+                // пользователь может редактировать только свои заявки
                 btnRemove.Enabled =
                     btnEdit.Enabled =
                         ((Current.CurrentUser.IsAdmin) && (!order.IsSigned)) ||
@@ -183,6 +231,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Утверждение и отмена утверждения для заявок
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSign_Click(object sender, EventArgs e)
         {
             var order = _bindingSource.Current as Order;
@@ -198,12 +251,18 @@ namespace MultiOrderWin
 
         private void SignLinked(Order order)
         {
+            // утверждаем или отменяем все связанные заявки
             foreach (var o in _db.Orders.Where(or1 => or1.ParentId == order.Id))
             {
                 o.IsSigned = order.IsSigned;
             }
         }
 
+        /// <summary>
+        /// Форматирования ячейки в зависимости от статуса заявки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gridOrders_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var order = _bindingSource[e.RowIndex] as Order;
@@ -216,19 +275,30 @@ namespace MultiOrderWin
             }            
         }
 
+        /// <summary>
+        /// Загрузка оборудования связанного с заявкой
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gridOrders_SelectionChanged(object sender, EventArgs e)
         {
             var order = _bindingSource.Current as Order;
             if (order != null) LoadEquipment(order);
         }
 
+        /// <summary>
+        /// Загрузка оборудования связанного с заявкой
+        /// </summary>
+        /// <param name="order"></param>
         private void LoadEquipment(Order order)
         {
             gridEquipment.Rows.Clear();
             if (order != null)
             {
+                // выбираем оборудование связанное с заявкой
                 var equipments =
                     _db.OrdersEquipments.Include(oe => oe.Equipment).Where(oe => oe.OrderId == order.Id).ToList();
+                // добавляем строки в таблицу
                 foreach (var equipment in equipments)
                 {
                     var row = new DataGridViewRow();
@@ -240,6 +310,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Просмотр заявки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnView_Click(object sender, EventArgs e)
         {
             using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, false))
@@ -248,12 +323,35 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Отчет о количестве заявок пользователя в разрезе месяцев
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void miOrderUsers_Click(object sender, EventArgs e)
         {
             using (var reportForn = new OrderUserReport())
             {
                 reportForn.ShowDialog(this);
             }
+        }
+
+        /// <summary>
+        /// График заявок на оборудование
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void miChartMulti_Click(object sender, EventArgs e)
+        {
+            using (var chartForm = new ChartForm())
+            {
+                chartForm.ShowDialog(this);
+            }
+        }
+
+        private void miClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

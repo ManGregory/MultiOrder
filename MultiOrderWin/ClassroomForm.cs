@@ -15,20 +15,28 @@ namespace MultiOrderWin
 {
     public partial class ClassroomForm : Form
     {
+        // подключение к базе
         private readonly MediaContext _db = new MediaContext();
+        // байндинг для таблицы
         private readonly BindingSource _gridBindingSource = new BindingSource();
 
         public ClassroomForm()
         {
             InitializeComponent();
+            // загрзузка аудиторий из базы
             _db.Classrooms.Load();
+            // получение байндинга
             BindingList<Classroom> gridBindingList = _db.Classrooms.Local.ToBindingList();
+            // связываем таблицу с байндингом
             _gridBindingSource.DataSource = gridBindingList;           
             gridClassrooms.DataSource = _gridBindingSource;
             gridClassrooms.Columns[0].Width = gridClassrooms.Width - 50;
             bnClassrooms.BindingSource = _gridBindingSource;
         }
 
+        /// <summary>
+        /// Сохранение данных в базе
+        /// </summary>
         private void Save()
         {
             try
@@ -42,6 +50,11 @@ namespace MultiOrderWin
             
         }
 
+        /// <summary>
+        /// Обработка ошибок ввода
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gridClassrooms_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.ThrowException = false;

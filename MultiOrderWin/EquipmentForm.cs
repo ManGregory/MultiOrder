@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Entity;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MultiOrderWin.Models;
-using MultiOrderWin.Properties;
 
 namespace MultiOrderWin
 {
@@ -26,6 +19,9 @@ namespace MultiOrderWin
             gridEquipment.DataSource = _gridBindingSource;
         }
 
+        /// <summary>
+        /// Загрузка данных в таблицу
+        /// </summary>
         private void BindGrid()
         {
             BindingList<Equipment> gridBindingList = _db.Equipments.Local.ToBindingList();
@@ -34,6 +30,9 @@ namespace MultiOrderWin
             _gridBindingSource.DataSource = gridBindingList;
         }
 
+        /// <summary>
+        /// Загрузка оборудования из базы
+        /// </summary>
         private void LoadEquipments()
         {
             _db.Equipments.Include(e => e.Classroom).Load();
@@ -67,6 +66,11 @@ namespace MultiOrderWin
             Save();
         }
 
+        /// <summary>
+        /// Редактирование оборудования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEdit_Click(object sender, EventArgs e)
         {
             if (_gridBindingSource.Current != null)
@@ -83,6 +87,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Добавление оборудования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
             using (var addEquipmentForm = new AddEquipmentForm())
@@ -96,6 +105,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Загрузка доступного или всего оборудования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chkAvailable_CheckedChanged(object sender, EventArgs e)
         {
             if (chkAvailable.Checked)

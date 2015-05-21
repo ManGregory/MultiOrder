@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects.DataClasses;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MultiOrderWin.Models;
 
@@ -18,8 +13,10 @@ namespace MultiOrderWin
         public Order Order { get; set; }
         
         private readonly MediaContext _db = new MediaContext();
-        private List<OrdersEquipment> _equipmentList = new List<OrdersEquipment>();
-        private bool _isEditable;
+        /// <summary>
+        /// Форма доступна для редактирования или нет
+        /// </summary>
+        private readonly bool _isEditable;
 
         public AddOrderForm()
         {
@@ -33,17 +30,23 @@ namespace MultiOrderWin
             gridEquipments.AutoGenerateColumns = false;
         }
 
+        /// <summary>
+        /// Загрузка оборудования в таблицу
+        /// </summary>
         private void BindEquipments()
         {
             if (Order != null)
             {
                 gridEquipments.Rows.Clear();
+                // загрузка оборудования из аудитории в таблицу
                 LoadFromClassroom();
                 if (Order.OrdersEquipment != null)
                 {
                     foreach (var orderEquipment in Order.OrdersEquipment)
                     {
+                        // находим оборудовавние в базе
                         var equipment = _db.Equipments.Find(orderEquipment.EquipmentId);
+                        // добавляем в таблицу
                         if (equipment != null)
                         {
                             var row = new DataGridViewRow();
@@ -59,6 +62,9 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Загрузка оборудования из аудитории
+        /// </summary>
         private void LoadFromClassroom()
         {
             var classroom = cmbClassrooms.SelectedItem as Classroom;
@@ -78,6 +84,9 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Загрузка аудиторий в выпадающий список
+        /// </summary>
         private void BindClassrooms()
         {
             _db.Classrooms.Load();
@@ -85,6 +94,9 @@ namespace MultiOrderWin
             cmbClassrooms.DataSource = classrooms;
         }
 
+        /// <summary>
+        /// Загрузка периодов заявки в выпадающий список
+        /// </summary>
         private void LoadPeriods()
         {
             cmbPeriods.Items.Clear();
@@ -92,6 +104,9 @@ namespace MultiOrderWin
             cmbPeriods.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Загрузка учебных недель в выпадающий список
+        /// </summary>
         private void LoadWeeks()
         {
             cmbWeeks.Items.Clear();
@@ -99,12 +114,20 @@ namespace MultiOrderWin
             SetWeekNumber();
         }
 
+        /// <summary>
+        /// Установка текущего номера учебной недели
+        /// </summary>
         private void SetWeekNumber()
         {
             var weekNumber = DbHelper.GetWeekNumber(edDate.Value, _db);
             cmbWeeks.SelectedIndex = weekNumber - 1;
         }
 
+        /// <summary>
+        /// Редактирование заявки
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="isEditable"></param>
         public AddOrderForm(Order order, bool isEditable) : this()
         {
             Order = order;
@@ -114,12 +137,19 @@ namespace MultiOrderWin
             EnableOrderGui();
         }
 
+        /// <summary>
+        /// Установка свойств интерфейса для редактирования
+        /// </summary>
         private void EnableOrderGui()
         {
             grpOrderInfo.Enabled = _isEditable;
             btnSave.Enabled = _isEditable;
         }
 
+        /// <summary>
+        /// Загрузка элементов формы из заявки
+        /// </summary>
+        /// <param name="order"></param>
         private void LoadOrder(Order order)
         {
             edDate.Value = order.Date;
@@ -131,6 +161,10 @@ namespace MultiOrderWin
             BindEquipments();
         }
 
+        /// <summary>
+        /// Выбор периода в выпадающем списке
+        /// </summary>
+        /// <param name="period"></param>
         private void SelectPeriod(string period)
         {
             foreach (var item in cmbPeriods.Items)
@@ -143,6 +177,10 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Выбор учебной недели в выпадающем списке
+        /// </summary>
+        /// <param name="weekNumber"></param>
         private void SelectWeek(string weekNumber)
         {
             foreach (var item in cmbWeeks.Items)
@@ -155,6 +193,10 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Выбор аудитории в выпадающем списке
+        /// </summary>
+        /// <param name="classroomId"></param>
         private void SelectClassroom(int classroomId)
         {
             foreach (var item in cmbClassrooms.Items)
@@ -168,6 +210,11 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Сохранение заявки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (Check())
@@ -186,6 +233,10 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Проверка заявки 
+        /// </summary>
+        /// <returns></returns>
         private bool Check()
         {
             if ((edDate.Value - DateTime.Now).TotalDays <= 2)
@@ -196,6 +247,11 @@ namespace MultiOrderWin
             return true;
         }
 
+        /// <summary>
+        /// Добавление оборудования в заявку
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
             using (var addEquipmentToOrderForm = new AddEquipmentToOrderForm(GetAddedEquipments(), GetOrderParams()))
@@ -209,19 +265,31 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Получение параметров заявки
+        /// </summary>
+        /// <returns></returns>
         private Tuple<int, int, DateTime> GetOrderParams()
         {
             return new Tuple<int, int, DateTime>((int) numFromPair.Value, (int) numToPair.Value, edDate.Value);
         }
 
+        /// <summary>
+        /// Редактирование оборудования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEdit_Click(object sender, EventArgs e)
         {
             if (gridEquipments.CurrentRow != null)
             {
+                // получаем айдишники записи
                 var orderId = (int)gridEquipments.CurrentRow.Cells["OrderId"].Value;
                 var equipmentId = (int)gridEquipments.CurrentRow.Cells["EquipmentId"].Value;
+                // находим запись в базе
                 var currentOrderEquipment =
                     Order.OrdersEquipment.FirstOrDefault(o => o.OrderId == orderId && o.EquipmentId == equipmentId);
+                // открываем форму для редактирования
                 using (
                     var addEquipmentToOrderForm = new AddEquipmentToOrderForm(currentOrderEquipment,
                         GetAddedEquipments(),
@@ -229,6 +297,7 @@ namespace MultiOrderWin
                 {
                     if (addEquipmentToOrderForm.ShowDialog(this) == DialogResult.OK)
                     {
+                        // если это первое добавление оборудования, то нужно создать список
                         if (Order.OrdersEquipment == null)
                             Order.OrdersEquipment = new EntityCollection<OrdersEquipment>();
                         Order.OrdersEquipment.Add(addEquipmentToOrderForm.OrdersEquipment);
@@ -238,6 +307,10 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Получение списка уже добавленного оборудования
+        /// </summary>
+        /// <returns></returns>
         private List<Equipment> GetAddedEquipments()
         {
             if (Order.OrdersEquipment == null)
@@ -247,21 +320,35 @@ namespace MultiOrderWin
             return Order.OrdersEquipment.Select(oe => new Equipment {Id = oe.EquipmentId}).ToList();
         }
 
+        /// <summary>
+        /// Загрузка оборудования для указанной аудитории
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbClassrooms_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindEquipments();
         }
 
+        /// <summary>
+        /// Доступность элементов для редактирования оборудования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gridEquipments_SelectionChanged(object sender, EventArgs e)
         {
             EnableGui();
         }
 
+        /// <summary>
+        /// Доступность элементов для редактирования оборудования
+        /// </summary>
         private void EnableGui()
         {
             var currentRow = gridEquipments.CurrentRow;
             if (currentRow != null)
             {
+                // нельзя редактировать, если оборудование из аудитории
                 btnEdit.Enabled = btnRemove.Enabled =
                     (int)currentRow.Cells["IsFromClassroom"].Value == 0;
             }
@@ -277,6 +364,11 @@ namespace MultiOrderWin
             SetWeekNumber();
         }
 
+        /// <summary>
+        /// Удаление оборудования из заявки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRemove_Click(object sender, EventArgs e)
         {
             if (gridEquipments.CurrentRow != null)

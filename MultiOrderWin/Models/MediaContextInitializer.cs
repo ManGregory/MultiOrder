@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 
 namespace MultiOrderWin.Models
 {
+    /// <summary>
+    /// Инициализаця базы данных начальными значениями
+    /// </summary>
     class MediaContextInitializer : DropCreateDatabaseIfModelChanges<MediaContext>
     {
         protected override void Seed(MediaContext context)

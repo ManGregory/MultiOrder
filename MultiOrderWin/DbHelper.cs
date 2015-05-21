@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity.Core.Objects.DataClasses;
-using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using MultiOrderWin.Models;
 
 namespace MultiOrderWin
 {
+    /// <summary>
+    /// Вспомогательный класс для работы с базой
+    /// </summary>
     public static class DbHelper
     {
+        /// <summary>
+        /// Получение доступного оборудования для указанной пары
+        /// </summary>
+        /// <param name="pair">Номер пары</param>
+        /// <param name="date">Дата</param>
+        /// <param name="db">База</param>
+        /// <returns>Список доступного оборудования</returns>
         public static IEnumerable<Equipment> GetAvailableEquipment(int pair, DateTime date, MediaContext db)
         {
             var equipments = db.Database.SqlQuery<Equipment>(
@@ -36,6 +42,14 @@ namespace MultiOrderWin
             //return GetAvailableEquipment(pair, pair, date, db);
         }
 
+        /// <summary>
+        /// Получение доступного оборудования для указанного диапазона оборудования
+        /// </summary>
+        /// <param name="fromPair">С какой пары</param>
+        /// <param name="toPair">По какую пару</param>
+        /// <param name="date">Дата</param>
+        /// <param name="db">База</param>
+        /// <returns>Cписок доступного оборудования</returns>
         public static IEnumerable<Equipment> GetAvailableEquipment(int fromPair, int toPair, DateTime date,
             MediaContext db)
         {
@@ -51,7 +65,7 @@ namespace MultiOrderWin
                 "        from  " +
                 "            (select sum(oe.Amount) am " +
                 "            from OrdersEquipments oe  " +
-                "                join Orders o on oe.OrderId = o.Id and o.IsSigned = 1 and cast(o.[Date] as Date) = @date and o.FromPair >= @fromPair and o.ToPair <= @toPair " +
+                "                join Orders o on oe.OrderId = o.Id and o.IsSigned = 1 and cast(o.[Date] as Date) = @date and (o.FromPair >= @fromPair or o.ToPair <= @toPair) " +
                 "            where oe.EquipmentId = e.Id " +
                 "            group by o.FromPair + '-' + o.ToPair) as b) as OrderedAmount " +
                 "    from Equipments e) a " +
@@ -62,6 +76,12 @@ namespace MultiOrderWin
             return equipments.Where(e => e.Amount > 0).ToList();
         }
 
+        /// <summary>
+        /// Отчет о количество заявок пользователей в разрезе месяцов
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="db"></param>
+        /// <returns></returns>
         public static IEnumerable<OrderUser> GetUsersOrderInMonths(int year, MediaContext db)
         {
             List<OrderUser> usersOrder = db.Database.SqlQuery<OrderUser>(
@@ -75,12 +95,23 @@ namespace MultiOrderWin
             return usersOrder;
         }
 
+        /// <summary>
+        /// Получение номера недели в году
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>Номер недели в году</returns>
         private static int WeekOfYearISO8601(DateTime date)
         {
             var day = (int)CultureInfo.CurrentCulture.Calendar.GetDayOfWeek(date);
             return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date.AddDays(4 - (day == 0 ? 7 : day)), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
 
+        /// <summary>
+        /// Получение номера учебной недели для указанной даты
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="db"></param>
+        /// <returns></returns>
         public static int GetWeekNumber(DateTime date, MediaContext db)
         {
             var resultWeekNum = 1;
@@ -102,6 +133,13 @@ namespace MultiOrderWin
             return resultWeekNum;
         }
 
+        /// <summary>
+        /// Добавление нескольких заявок (месяц, семестр)
+        /// </summary>
+        /// <param name="order">Заявка-родитель</param>
+        /// <param name="beginDate">С какой даты</param>
+        /// <param name="endDate">По какую дату</param>
+        /// <param name="db">База</param>
         public static void AddMultipleOrders(Order order, DateTime beginDate, DateTime endDate, MediaContext db)
         {
             var date = beginDate;

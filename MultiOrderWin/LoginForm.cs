@@ -10,12 +10,14 @@ namespace MultiOrderWin
         public LoginForm()
         {
             InitializeComponent();
+            // установка инициализатора для базы
             Database.SetInitializer(new MediaContextInitializer());
             txtLogin.Focus();
         }
 
         private void btnOk_Click(object sender, System.EventArgs e)
         {
+            // проверка прав пользователя
             var user = GetUser(txtLogin.Text, txtPassword.Text);
             if (user != null)
             {
@@ -30,6 +32,12 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Поиск пользователя в базе
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>Пользователь</returns>
         private User GetUser(string login, string password)
         {
             using (var db = new MediaContext())
@@ -43,6 +51,11 @@ namespace MultiOrderWin
             Close();
         }
 
+        /// <summary>
+        /// Вызов форма для отображения подключения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfig_Click(object sender, System.EventArgs e)
         {
             using (var configForm = new ConfigForm())
