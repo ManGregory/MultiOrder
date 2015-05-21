@@ -19,10 +19,6 @@ namespace MultiOrderWin.Models
         [Browsable(false)]
         public int? ParentId { get; set; }
 
-        [Browsable(false)]
-        [ForeignKey("ParentId")]
-        public virtual Order ParentOrder { get; set; }
-
         [Required]
         [DataType(DataType.Date)]
         [DisplayName("Дата подачи заявки")]
@@ -59,5 +55,15 @@ namespace MultiOrderWin.Models
 
         [DisplayName("Учебная неделя")]
         public string WeekNumber { get; set; }
+
+        [Browsable(false)]
+        public int Week {
+            get
+            {
+                if (WeekNumber == "1 неделя") return 1;
+                if (WeekNumber == "2 неделя") return 2;
+                return 0;
+            }
+        }
     }
 }

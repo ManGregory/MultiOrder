@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +58,72 @@ namespace MultiOrderWin
                 new SqlParameter("@fromPair", fromPair),
                 new SqlParameter("@toPair", toPair));
             return equipments.Where(e => e.Amount > 0).ToList();
+        }
+
+        private static int WeekOfYearISO8601(DateTime date)
+        {
+            var day = (int)CultureInfo.CurrentCulture.Calendar.GetDayOfWeek(date);
+            return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date.AddDays(4 - (day == 0 ? 7 : day)), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
+
+        public static int GetWeekNumber(DateTime date, MediaContext db)
+        {
+            var resultWeekNum = 1;
+            var semester =
+                db.Semesters.FirstOrDefault(s => s.BeginDate <= date && date <= s.EndDate);
+            if (semester != null)
+            {
+                var beginWeekNum = WeekOfYearISO8601(semester.BeginDate);
+                var dateWeekNum = WeekOfYearISO8601(date);
+                if ((dateWeekNum - beginWeekNum)%2 == 0)
+                {
+                    resultWeekNum = semester.FirstSemesterNumber;
+                }
+                else
+                {
+                    resultWeekNum = semester.FirstSemesterNumber == 1 ? 2 : 1;
+                }
+            }
+            return resultWeekNum;
+        }
+
+        public static void AddMultipleOrders(Order order, DateTime beginDate, DateTime endDate, MediaContext db)
+        {
+            var date = beginDate;
+            while (date <= endDate)
+            {
+                var weekNum = GetWeekNumber(date, db);
+                if (weekNum == order.Week || order.Week == 0)
+                {
+                    var newOrder = new Order
+                    {
+                        ParentId = order.Id,
+                        ClassroomId = order.ClassroomId,
+                        Date = date,
+                        FromPair = order.FromPair,
+                        ToPair = order.ToPair,
+                        IsSigned = order.IsSigned,
+                        Period = order.Period,
+                        WeekNumber = order.WeekNumber,
+                        OrdersEquipment = new EntityCollection<OrdersEquipment>(),
+                        UserId = order.UserId
+                    };
+                    db.Orders.Add(newOrder);
+                    db.SaveChanges();
+
+                    foreach (var orderEquipment in order.OrdersEquipment)
+                    {
+                        newOrder.OrdersEquipment.Add(new OrdersEquipment
+                        {
+                            Amount = orderEquipment.Amount,
+                            EquipmentId = orderEquipment.EquipmentId,
+                            OrderId = newOrder.Id
+                        });
+                        db.SaveChanges();
+                    }
+                }
+                date = date.AddDays(7);
+            }
         }
     }
 }

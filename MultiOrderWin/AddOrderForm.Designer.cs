@@ -194,6 +194,7 @@
             this.cmbPeriods.Name = "cmbPeriods";
             this.cmbPeriods.Size = new System.Drawing.Size(188, 22);
             this.cmbPeriods.TabIndex = 13;
+            this.cmbPeriods.SelectedIndexChanged += new System.EventHandler(this.cmbPeriods_SelectedIndexChanged);
             // 
             // cmbWeeks
             // 
@@ -280,6 +281,7 @@
             this.edDate.Name = "edDate";
             this.edDate.Size = new System.Drawing.Size(154, 22);
             this.edDate.TabIndex = 5;
+            this.edDate.ValueChanged += new System.EventHandler(this.edDate_ValueChanged);
             // 
             // label4
             // 

@@ -19,10 +19,12 @@ namespace MultiOrderWin
         
         private readonly MediaContext _db = new MediaContext();
         private List<OrdersEquipment> _equipmentList = new List<OrdersEquipment>();
+        private bool _isEditable;
 
         public AddOrderForm()
         {
             InitializeComponent();
+            _isEditable = true;
             Text = "Добавление заявки";
             Order = new Order();
             LoadWeeks();
@@ -94,14 +96,28 @@ namespace MultiOrderWin
         {
             cmbWeeks.Items.Clear();
             cmbWeeks.Items.AddRange(new [] {"1 неделя", "2 неделя", "1 и 2 неделя"});
-            cmbWeeks.SelectedIndex = 0;
+            SetWeekNumber();
         }
 
-        public AddOrderForm(Order order) : this()
+        private void SetWeekNumber()
+        {
+            var weekNumber = DbHelper.GetWeekNumber(edDate.Value, _db);
+            cmbWeeks.SelectedIndex = weekNumber - 1;
+        }
+
+        public AddOrderForm(Order order, bool isEditable) : this()
         {
             Order = order;
             Text = "Редактирование заявки";
             LoadOrder(order);
+            _isEditable = isEditable;
+            EnableOrderGui();
+        }
+
+        private void EnableOrderGui()
+        {
+            grpOrderInfo.Enabled = _isEditable;
+            btnSave.Enabled = _isEditable;
         }
 
         private void LoadOrder(Order order)
@@ -154,13 +170,30 @@ namespace MultiOrderWin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Order.Date = edDate.Value;
-            Order.FromPair = (int)numFromPair.Value;
-            Order.ToPair = (int)numToPair.Value;
-            Order.ClassroomId = (cmbClassrooms.SelectedItem as Classroom).Id;
-            Order.UserId = Current.CurrentUser.Id;
-            Order.Period = cmbPeriods.SelectedItem.ToString();
-            Order.WeekNumber = cmbWeeks.SelectedItem.ToString();
+            if (Check())
+            {
+                Order.Date = edDate.Value;
+                Order.FromPair = (int) numFromPair.Value;
+                Order.ToPair = (int) numToPair.Value;
+                Order.ClassroomId = (cmbClassrooms.SelectedItem as Classroom).Id;
+                Order.UserId = Current.CurrentUser.Id;
+                Order.Period = cmbPeriods.SelectedItem.ToString();
+                Order.WeekNumber = cmbWeeks.SelectedItem.ToString();
+            }
+            else
+            {
+                DialogResult = DialogResult.None;
+            }
+        }
+
+        private bool Check()
+        {
+            if ((edDate.Value - DateTime.Now).TotalDays <= 2)
+            {
+                MessageBox.Show("Дата подачи заявки должна быть больше текущей, как минимум на два дня");
+                return false;
+            }
+            return true;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -232,6 +265,16 @@ namespace MultiOrderWin
                 btnEdit.Enabled = btnRemove.Enabled =
                     (int)currentRow.Cells["IsFromClassroom"].Value == 0;
             }
+        }
+
+        private void cmbPeriods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbWeeks.Enabled = cmbPeriods.SelectedIndex > 0;
+        }
+
+        private void edDate_ValueChanged(object sender, EventArgs e)
+        {
+            SetWeekNumber();
         }
     }
 }

@@ -101,6 +101,7 @@ namespace MultiOrderWin
             }
             else
             {
+                MessageBox.Show("Введенное количество превышает допустимое");
                 DialogResult = DialogResult.None;
             }
         }

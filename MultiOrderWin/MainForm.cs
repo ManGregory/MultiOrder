@@ -79,11 +79,42 @@ namespace MultiOrderWin
             {
                 if (addOrderForm.ShowDialog(this) == DialogResult.OK)
                 {
-                    _db.Orders.Add(addOrderForm.Order);
+                    AddOrder(addOrderForm.Order);
                     Save();
                     BindGrid();
                 }
             }
+        }
+
+        private void AddOrder(Order order)
+        {
+            if (order.Period.Contains("Месяц") || order.Period.Contains("Семестр"))
+            {
+                _db.Orders.Add(order);
+                _db.SaveChanges();
+                AddOrderForPeriod(order);
+            }
+            else
+            {
+                _db.Orders.Add(order);
+            }
+        }
+
+        private void AddOrderForPeriod(Order order)
+        {
+            var date = order.Date.AddDays(7);
+            DateTime endDate = date;
+            if (order.Period.Contains("Месяц"))
+            {
+                endDate = order.Date.AddMonths(1);                             
+            } 
+            else if (order.Period.Contains("Семестр"))
+            {
+                var firstOrDefault = _db.Semesters.FirstOrDefault(s => order.Date >= s.BeginDate && order.Date <= s.EndDate);
+                if (firstOrDefault != null)
+                    endDate = firstOrDefault.EndDate;
+            }
+            DbHelper.AddMultipleOrders(order, date, endDate, _db);
         }
 
         private void BindGrid()
@@ -105,10 +136,10 @@ namespace MultiOrderWin
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order))
+            using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, true))
             {
                 if (addOrderForm.ShowDialog(this) == DialogResult.OK)
-                {    
+                {                        
                     Save();
                     BindGrid();
                     _bindingSource.ResetCurrentItem();
@@ -188,6 +219,17 @@ namespace MultiOrderWin
                     new DataGridViewTextBoxCell {Value = equipment.Equipment.Name},
                     new DataGridViewTextBoxCell {Value = equipment.Amount});
                 gridEquipment.Rows.Add(row);
+            }
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, false))
+            {
+                if (addOrderForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    
+                }
             }
         }
     }
