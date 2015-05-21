@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.Linq;
+using System.Text;
+using MultiOrderWin.Extensions;
 using MultiOrderWin.Models;
 
 namespace MultiOrderWin
@@ -145,8 +149,10 @@ namespace MultiOrderWin
             while (date <= endDate)
             {
                 var weekNum = GetWeekNumber(date, db);
+                // если номер недели совпадает с номером недели заявки или это заявка на обе недели
                 if (weekNum == order.Week || order.Week == 0)
                 {
+                    // создаем новую заявку
                     var newOrder = new Order
                     {
                         ParentId = order.Id,
@@ -162,7 +168,7 @@ namespace MultiOrderWin
                     };
                     db.Orders.Add(newOrder);
                     db.SaveChanges();
-
+                    // добавляем оборудование в новую заявку
                     foreach (var orderEquipment in order.OrdersEquipment)
                     {
                         newOrder.OrdersEquipment.Add(new OrdersEquipment
@@ -176,6 +182,139 @@ namespace MultiOrderWin
                 }
                 date = date.AddDays(7);
             }
+        }
+
+        private static string GetOrders(DateTime date, int pairNum)
+        {
+            var ordersText = new StringBuilder();
+            using (var db = new MediaContext())
+            {
+                var orders = db.Orders
+                    .Select(o => o)
+                    .Include(o => o.Classroom).Include(o => o.User).ToList()
+                    .Where(o => o.IsSigned && pairNum >= o.FromPair && pairNum <= o.ToPair && o.Date.Date == date.Date)
+                    .ToList();
+                foreach (var o in orders)
+                {
+                    ordersText.AppendFormat("{0} ({1})<br />", o.Classroom.Name,
+                        string.Join(", ",
+                            db.OrdersEquipments.Where(oe => oe.OrderId == o.Id)
+                                .Include(oe => oe.Equipment)
+                                .ToList()
+                                .Select(oe => string.Format("{0}: {1}", oe.Equipment.Name, oe.Amount))));
+                }
+            }
+            return ordersText.ToString();
+        }
+
+        private static string GetRow(DateTime fromDate, int pairNum)
+        {
+            var sb = new StringBuilder(string.Format("{0}", "<tr>"));
+            sb.AppendFormat("{1}{0}{2}", 
+                pairNum == 0 ? "Пара" : pairNum.ToString(),
+                pairNum == 0 ? "<th>" : "<td>",
+                pairNum == 0 ? "</th>" : "</td>");
+            var date = fromDate.StartOfWeek(DayOfWeek.Monday);
+            while (date <= fromDate.EndOfWeek(DayOfWeek.Monday))
+            {
+                sb.AppendFormat("{1}{0}&nbsp{2}", 
+                    pairNum == 0 ? date.ToShortDateString() : GetOrders(date, pairNum),
+                    pairNum == 0 ? "<th>" : "<td>",
+                    pairNum == 0 ? "</th>" : "</td>");
+                date = date.AddDays(1);
+            }
+            sb.AppendFormat("{0}", "</tr>");
+            return sb.ToString();
+        }
+
+        private static string GetCaption(DateTime fromDate)
+        {
+            return string.Format("<caption>Учебная неделя № {0}, с {1} по {2}</caption>",
+                GetWeekNumber(fromDate, new MediaContext()),
+                fromDate.StartOfWeek(DayOfWeek.Monday).ToShortDateString(),
+                fromDate.EndOfWeek(DayOfWeek.Monday).ToShortDateString());
+        }
+
+        private static string GetWeekTable(DateTime fromDate)
+        {
+            var sb = new StringBuilder(string.Format("<table border='1'>{0}", GetCaption(fromDate)));
+            const int pairsNum = 5;
+            for (var i = 0; i <= pairsNum; i++)
+            {
+                sb.AppendFormat(GetRow(fromDate, i));
+            }
+            sb.Append("</table>");
+            return sb.ToString();
+        }
+
+        private static string GetStyle()
+        {
+            return "<style type='text/css'>body {font-family: Tahoma; } td, th {padding: 5px;} table {font-size: 11pt;}</style>";
+        }
+
+        private static string GetBeginHeader()
+        {
+            return string.Format("<html><head>{0}</head><body>", GetStyle());
+        }
+
+        private static string GetEndHeader()
+        {
+            return "</body></html>";
+        }
+
+        private static string GetWeekChart(DateTime fromDate)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(GetBeginHeader());
+            sb.AppendLine(GetWeekTable(fromDate));
+            sb.AppendLine(GetEndHeader());
+            return sb.ToString();
+        }
+
+        private static string GetMonthChart(DateTime fromDate)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(GetBeginHeader());
+            var beginDate = new DateTime(fromDate.Year, fromDate.Month, 1);
+            var endDate = new DateTime(fromDate.Year, fromDate.Month,
+                DateTime.DaysInMonth(fromDate.Year, fromDate.Month));
+            var date = beginDate;
+            while (date <= endDate)
+            {
+                sb.AppendLine(GetWeekTable(date));
+                sb.AppendLine("</br>");
+                date = date.AddDays(7);
+            }
+            sb.AppendLine(GetEndHeader());
+            return sb.ToString();
+        }
+
+        private static string GetSemesterChart(DateTime fromDate)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(GetBeginHeader());
+            var semester = new MediaContext().Semesters.FirstOrDefault(s => fromDate >= s.BeginDate && fromDate <= s.EndDate);
+            if (semester != null)
+            {
+                var beginDate = semester.BeginDate;
+                var endDate = semester.EndDate;
+                var date = beginDate;
+                while (date <= endDate)
+                {
+                    sb.AppendLine(GetWeekTable(date));
+                    sb.AppendLine("</br>");
+                    date = date.AddDays(7);
+                }
+            }            
+            sb.AppendLine(GetEndHeader());
+            return sb.ToString();            
+        }
+
+        public static string GetOrderChart(int period, DateTime fromDate)
+        {
+            if (period == 0) return GetWeekChart(fromDate);
+            if (period == 1) return GetMonthChart(fromDate);
+            return GetSemesterChart(fromDate);
         }
     }
 

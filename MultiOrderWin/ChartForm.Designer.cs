@@ -31,17 +31,17 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.wb = new System.Windows.Forms.WebBrowser();
             this.cmbPeriod = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.edDate = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.dateTimePicker1);
+            this.panel1.Controls.Add(this.edDate);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.cmbPeriod);
             this.panel1.Controls.Add(this.label1);
@@ -62,21 +62,21 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.webBrowser1);
+            this.panel2.Controls.Add(this.wb);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 42);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(596, 256);
             this.panel2.TabIndex = 1;
             // 
-            // webBrowser1
+            // wb
             // 
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(23, 22);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(596, 256);
-            this.webBrowser1.TabIndex = 0;
+            this.wb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wb.Location = new System.Drawing.Point(0, 0);
+            this.wb.MinimumSize = new System.Drawing.Size(23, 22);
+            this.wb.Name = "wb";
+            this.wb.Size = new System.Drawing.Size(596, 256);
+            this.wb.TabIndex = 0;
             // 
             // cmbPeriod
             // 
@@ -85,6 +85,7 @@
             this.cmbPeriod.Name = "cmbPeriod";
             this.cmbPeriod.Size = new System.Drawing.Size(243, 22);
             this.cmbPeriod.TabIndex = 1;
+            this.cmbPeriod.SelectedIndexChanged += new System.EventHandler(this.cmbPeriod_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -95,12 +96,13 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Дата:";
             // 
-            // dateTimePicker1
+            // edDate
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(55, 11);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(206, 22);
-            this.dateTimePicker1.TabIndex = 3;
+            this.edDate.Location = new System.Drawing.Point(55, 11);
+            this.edDate.Name = "edDate";
+            this.edDate.Size = new System.Drawing.Size(206, 22);
+            this.edDate.TabIndex = 3;
+            this.edDate.ValueChanged += new System.EventHandler(this.edDate_ValueChanged);
             // 
             // ChartForm
             // 
@@ -125,10 +127,10 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.WebBrowser wb;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbPeriod;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker edDate;
     }
 }
