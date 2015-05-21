@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.numAmount = new System.Windows.Forms.NumericUpDown();
+            this.cmbEquipment = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cmbEquipment = new System.Windows.Forms.ComboBox();
-            this.numAmount = new System.Windows.Forms.NumericUpDown();
+            this.lblAvailableAmount = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAmount)).BeginInit();
@@ -46,22 +47,21 @@
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 78);
+            this.panel1.Location = new System.Drawing.Point(0, 106);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(332, 43);
             this.panel1.TabIndex = 0;
             // 
-            // panel2
+            // btnClose
             // 
-            this.panel2.Controls.Add(this.numAmount);
-            this.panel2.Controls.Add(this.cmbEquipment);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(332, 78);
-            this.panel2.TabIndex = 1;
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(247, 6);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 32);
+            this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "Отмена";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSave
             // 
@@ -74,16 +74,44 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnClose
+            // panel2
             // 
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(247, 6);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 32);
-            this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "Отмена";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.panel2.Controls.Add(this.lblAvailableAmount);
+            this.panel2.Controls.Add(this.numAmount);
+            this.panel2.Controls.Add(this.cmbEquipment);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(332, 106);
+            this.panel2.TabIndex = 1;
+            // 
+            // numAmount
+            // 
+            this.numAmount.Location = new System.Drawing.Point(109, 43);
+            this.numAmount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numAmount.Name = "numAmount";
+            this.numAmount.Size = new System.Drawing.Size(213, 22);
+            this.numAmount.TabIndex = 4;
+            this.numAmount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // cmbEquipment
+            // 
+            this.cmbEquipment.FormattingEnabled = true;
+            this.cmbEquipment.Location = new System.Drawing.Point(109, 15);
+            this.cmbEquipment.Name = "cmbEquipment";
+            this.cmbEquipment.Size = new System.Drawing.Size(213, 22);
+            this.cmbEquipment.TabIndex = 3;
+            this.cmbEquipment.SelectedIndexChanged += new System.EventHandler(this.cmbEquipment_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -103,36 +131,20 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Количество";
             // 
-            // cmbEquipment
+            // lblAvailableAmount
             // 
-            this.cmbEquipment.FormattingEnabled = true;
-            this.cmbEquipment.Location = new System.Drawing.Point(109, 15);
-            this.cmbEquipment.Name = "cmbEquipment";
-            this.cmbEquipment.Size = new System.Drawing.Size(213, 22);
-            this.cmbEquipment.TabIndex = 3;
-            // 
-            // numAmount
-            // 
-            this.numAmount.Location = new System.Drawing.Point(109, 43);
-            this.numAmount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numAmount.Name = "numAmount";
-            this.numAmount.Size = new System.Drawing.Size(213, 22);
-            this.numAmount.TabIndex = 4;
-            this.numAmount.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.lblAvailableAmount.AutoSize = true;
+            this.lblAvailableAmount.Location = new System.Drawing.Point(13, 77);
+            this.lblAvailableAmount.Name = "lblAvailableAmount";
+            this.lblAvailableAmount.Size = new System.Drawing.Size(146, 14);
+            this.lblAvailableAmount.TabIndex = 5;
+            this.lblAvailableAmount.Text = "Доступное количество: ";
             // 
             // AddEquipmentToOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 121);
+            this.ClientSize = new System.Drawing.Size(332, 149);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -159,5 +171,6 @@
         private System.Windows.Forms.ComboBox cmbEquipment;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblAvailableAmount;
     }
 }

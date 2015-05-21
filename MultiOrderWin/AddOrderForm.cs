@@ -36,18 +36,42 @@ namespace MultiOrderWin
             if (Order != null)
             {
                 gridEquipments.Rows.Clear();
-                foreach (var orderEquipment in Order.OrdersEquipment)
+                LoadFromClassroom();
+                if (Order.OrdersEquipment != null)
                 {
-                    var equipment = _db.Equipments.Find(orderEquipment.EquipmentId);
-                    if (equipment != null)
+                    foreach (var orderEquipment in Order.OrdersEquipment)
                     {
-                        var row = new DataGridViewRow();
-                        row.Cells.Add(new DataGridViewTextBoxCell {Value = equipment.Name});
-                        row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.Amount});
-                        row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.OrderId});
-                        row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.EquipmentId});
-                        gridEquipments.Rows.Add(row);
+                        var equipment = _db.Equipments.Find(orderEquipment.EquipmentId);
+                        if (equipment != null)
+                        {
+                            var row = new DataGridViewRow();
+                            row.Cells.Add(new DataGridViewTextBoxCell {Value = equipment.Name});
+                            row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.Amount});
+                            row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.OrderId});
+                            row.Cells.Add(new DataGridViewTextBoxCell {Value = orderEquipment.EquipmentId});
+                            row.Cells.Add(new DataGridViewTextBoxCell {Value = 0});
+                            gridEquipments.Rows.Add(row);
+                        }
                     }
+                }
+            }
+        }
+
+        private void LoadFromClassroom()
+        {
+            var classroom = cmbClassrooms.SelectedItem as Classroom;
+            if (classroom != null)
+            {
+                var equipments = _db.Equipments.Where(e => e.ClassroomId == classroom.Id);
+                foreach (var equipment in equipments)
+                {
+                    var row = new DataGridViewRow();
+                    row.Cells.Add(new DataGridViewTextBoxCell { Value = equipment.Name });
+                    row.Cells.Add(new DataGridViewTextBoxCell { Value = equipment.Amount });
+                    row.Cells.Add(new DataGridViewTextBoxCell { Value = -1 });
+                    row.Cells.Add(new DataGridViewTextBoxCell { Value = -1 });
+                    row.Cells.Add(new DataGridViewTextBoxCell { Value = 1 });
+                    gridEquipments.Rows.Add(row);
                 }
             }
         }
@@ -141,7 +165,7 @@ namespace MultiOrderWin
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            using (var addEquipmentToOrderForm = new AddEquipmentToOrderForm())
+            using (var addEquipmentToOrderForm = new AddEquipmentToOrderForm(GetAddedEquipments(), GetOrderParams()))
             {
                 if (addEquipmentToOrderForm.ShowDialog(this) == DialogResult.OK)
                 {
@@ -152,6 +176,11 @@ namespace MultiOrderWin
             }
         }
 
+        private Tuple<int, int, DateTime> GetOrderParams()
+        {
+            return new Tuple<int, int, DateTime>((int) numFromPair.Value, (int) numToPair.Value, edDate.Value);
+        }
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
             if (gridEquipments.CurrentRow != null)
@@ -160,7 +189,10 @@ namespace MultiOrderWin
                 var equipmentId = (int)gridEquipments.CurrentRow.Cells["EquipmentId"].Value;
                 var currentOrderEquipment =
                     Order.OrdersEquipment.FirstOrDefault(o => o.OrderId == orderId && o.EquipmentId == equipmentId);
-                using (var addEquipmentToOrderForm = new AddEquipmentToOrderForm(currentOrderEquipment))
+                using (
+                    var addEquipmentToOrderForm = new AddEquipmentToOrderForm(currentOrderEquipment,
+                        GetAddedEquipments(),
+                        GetOrderParams()))
                 {
                     if (addEquipmentToOrderForm.ShowDialog(this) == DialogResult.OK)
                     {
@@ -170,6 +202,35 @@ namespace MultiOrderWin
                         BindEquipments();
                     }
                 }
+            }
+        }
+
+        private List<Equipment> GetAddedEquipments()
+        {
+            if (Order.OrdersEquipment == null)
+            {
+                return new List<Equipment>();
+            }
+            return Order.OrdersEquipment.Select(oe => new Equipment {Id = oe.EquipmentId}).ToList();
+        }
+
+        private void cmbClassrooms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindEquipments();
+        }
+
+        private void gridEquipments_SelectionChanged(object sender, EventArgs e)
+        {
+            EnableGui();
+        }
+
+        private void EnableGui()
+        {
+            var currentRow = gridEquipments.CurrentRow;
+            if (currentRow != null)
+            {
+                btnEdit.Enabled = btnRemove.Enabled =
+                    (int)currentRow.Cells["IsFromClassroom"].Value == 0;
             }
         }
     }

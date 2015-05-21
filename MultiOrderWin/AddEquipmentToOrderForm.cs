@@ -18,22 +18,43 @@ namespace MultiOrderWin
 
         private MediaContext _db = new MediaContext();
 
-        public AddEquipmentToOrderForm()
+        private Tuple<int, int, DateTime> _orderParams;
+        private List<Equipment> _addedEquipments = new List<Equipment>();
+
+        public AddEquipmentToOrderForm(List<Equipment> addedEquipments, Tuple<int, int, DateTime> orderParams)
         {
             InitializeComponent();
             Text = "Добавление оборудования к заявке";
+            _orderParams = orderParams;
+            _addedEquipments = addedEquipments;
             BindEquipments();
         }
 
         private void BindEquipments()
         {
-            _db.Equipments.Load();
-            cmbEquipment.DataSource = _db.Equipments.Local.ToList();
+            //_db.Equipments.Load();
+            //cmbEquipment.DataSource = _db.Equipments.Local.ToList();
+            var availableEquipment = DbHelper.GetAvailableEquipment(_orderParams.Item1, _orderParams.Item2,
+                _orderParams.Item3, _db).ToList();
+            availableEquipment =
+                availableEquipment.Where(
+                    a =>
+                        _addedEquipments.All(a1 => a.Id != a1.Id)).ToList();
+            cmbEquipment.DataSource = availableEquipment;
         }
 
-        public AddEquipmentToOrderForm(OrdersEquipment ordersEquipment) : this()
+        public AddEquipmentToOrderForm(OrdersEquipment ordersEquipment, List<Equipment> addedEquipments, Tuple<int, int, DateTime> orderParams)
+            : this(addedEquipments, orderParams)
         {
             OrdersEquipment = ordersEquipment;
+            if (OrdersEquipment != null)
+            {
+                var availableEquipment = cmbEquipment.DataSource as List<Equipment>;
+                if (availableEquipment != null)
+                    availableEquipment.Insert(0, _db.Equipments.Find(OrdersEquipment.EquipmentId));
+                cmbEquipment.DataSource = null;
+                cmbEquipment.DataSource = availableEquipment;
+            }
             Text = "Редактирования оборудования в заявке";
             LoadOrderEquipment();
         }
@@ -64,9 +85,47 @@ namespace MultiOrderWin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (OrdersEquipment == null) OrdersEquipment = new OrdersEquipment();
-            OrdersEquipment.Amount = (int)numAmount.Value;
-            OrdersEquipment.EquipmentId = (cmbEquipment.SelectedItem as Equipment).Id;
+            if (CheckAmount())
+            {
+                if (OrdersEquipment == null) OrdersEquipment = new OrdersEquipment();
+                OrdersEquipment.Amount = (int) numAmount.Value;
+                var equipment = cmbEquipment.SelectedItem as Equipment;
+                if (equipment != null)
+                {
+                    OrdersEquipment.EquipmentId = equipment.Id;
+                }
+                else
+                {
+                    DialogResult = DialogResult.Cancel;
+                }
+            }
+            else
+            {
+                DialogResult = DialogResult.None;
+            }
+        }
+
+        private bool CheckAmount()
+        {
+            var res = true;
+            var equipment = cmbEquipment.SelectedItem as Equipment;
+            if (equipment != null)
+            {
+                if (equipment.Amount < numAmount.Value)
+                {
+                    res = false;
+                }
+            }
+            return res;
+        }
+
+        private void cmbEquipment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var equipment = cmbEquipment.SelectedItem as Equipment;
+            if (equipment != null)
+            {
+                lblAvailableAmount.Text = string.Format("Доступное количество: {0}", equipment.Amount);
+            }
         }
     }
 }

@@ -54,6 +54,7 @@
             this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EquipmentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsFromClassroom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.grpOrderInfo.SuspendLayout();
@@ -176,13 +177,15 @@
             this.EquipmentName,
             this.Amount,
             this.OrderId,
-            this.EquipmentId});
+            this.EquipmentId,
+            this.IsFromClassroom});
             this.gridEquipments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridEquipments.Location = new System.Drawing.Point(3, 18);
             this.gridEquipments.Name = "gridEquipments";
             this.gridEquipments.ReadOnly = true;
             this.gridEquipments.Size = new System.Drawing.Size(285, 101);
             this.gridEquipments.TabIndex = 0;
+            this.gridEquipments.SelectionChanged += new System.EventHandler(this.gridEquipments_SelectionChanged);
             // 
             // cmbPeriods
             // 
@@ -207,6 +210,7 @@
             this.cmbClassrooms.Name = "cmbClassrooms";
             this.cmbClassrooms.Size = new System.Drawing.Size(210, 22);
             this.cmbClassrooms.TabIndex = 10;
+            this.cmbClassrooms.SelectedIndexChanged += new System.EventHandler(this.cmbClassrooms_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -340,6 +344,13 @@
             this.EquipmentId.ReadOnly = true;
             this.EquipmentId.Visible = false;
             // 
+            // IsFromClassroom
+            // 
+            this.IsFromClassroom.HeaderText = "Column1";
+            this.IsFromClassroom.Name = "IsFromClassroom";
+            this.IsFromClassroom.ReadOnly = true;
+            this.IsFromClassroom.Visible = false;
+            // 
             // AddOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -391,5 +402,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IsFromClassroom;
     }
 }
