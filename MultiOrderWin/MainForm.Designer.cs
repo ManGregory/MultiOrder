@@ -42,18 +42,27 @@
             this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.gridOrders = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSign = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.pnlBottom = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.gridOrders = new System.Windows.Forms.DataGridView();
+            this.gridEquipment = new System.Windows.Forms.DataGridView();
+            this.EquipmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.msMain.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridEquipment)).BeginInit();
             this.SuspendLayout();
             // 
             // msMain
@@ -65,7 +74,7 @@
             this.msMain.Location = new System.Drawing.Point(0, 0);
             this.msMain.Name = "msMain";
             this.msMain.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.msMain.Size = new System.Drawing.Size(856, 24);
+            this.msMain.Size = new System.Drawing.Size(997, 24);
             this.msMain.TabIndex = 0;
             this.msMain.Text = "menuStrip1";
             // 
@@ -157,27 +166,17 @@
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 24);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(856, 370);
+            this.pnlMain.Size = new System.Drawing.Size(997, 370);
             this.pnlMain.TabIndex = 1;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.gridOrders);
+            this.panel2.Controls.Add(this.splitContainer1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 58);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(856, 251);
+            this.panel2.Size = new System.Drawing.Size(997, 251);
             this.panel2.TabIndex = 4;
-            // 
-            // gridOrders
-            // 
-            this.gridOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridOrders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridOrders.Location = new System.Drawing.Point(0, 0);
-            this.gridOrders.Name = "gridOrders";
-            this.gridOrders.Size = new System.Drawing.Size(856, 251);
-            this.gridOrders.TabIndex = 0;
-            this.gridOrders.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridOrders_CellFormatting);
             // 
             // panel1
             // 
@@ -188,7 +187,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(856, 58);
+            this.panel1.Size = new System.Drawing.Size(997, 58);
             this.panel1.TabIndex = 3;
             // 
             // btnSign
@@ -236,14 +235,75 @@
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBottom.Location = new System.Drawing.Point(0, 309);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(856, 61);
+            this.pnlBottom.Size = new System.Drawing.Size(997, 61);
             this.pnlBottom.TabIndex = 1;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.gridOrders);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.gridEquipment);
+            this.splitContainer1.Size = new System.Drawing.Size(997, 251);
+            this.splitContainer1.SplitterDistance = 727;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // gridOrders
+            // 
+            this.gridOrders.AllowUserToAddRows = false;
+            this.gridOrders.AllowUserToDeleteRows = false;
+            this.gridOrders.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.gridOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridOrders.Location = new System.Drawing.Point(0, 0);
+            this.gridOrders.Name = "gridOrders";
+            this.gridOrders.ReadOnly = true;
+            this.gridOrders.Size = new System.Drawing.Size(727, 251);
+            this.gridOrders.TabIndex = 0;
+            this.gridOrders.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridOrders_CellFormatting);
+            this.gridOrders.SelectionChanged += new System.EventHandler(this.gridOrders_SelectionChanged);
+            // 
+            // gridEquipment
+            // 
+            this.gridEquipment.AllowUserToAddRows = false;
+            this.gridEquipment.AllowUserToDeleteRows = false;
+            this.gridEquipment.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.gridEquipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridEquipment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.EquipmentName,
+            this.Amount});
+            this.gridEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridEquipment.Location = new System.Drawing.Point(0, 0);
+            this.gridEquipment.Name = "gridEquipment";
+            this.gridEquipment.ReadOnly = true;
+            this.gridEquipment.Size = new System.Drawing.Size(266, 251);
+            this.gridEquipment.TabIndex = 0;
+            // 
+            // EquipmentName
+            // 
+            this.EquipmentName.HeaderText = "Оборудование";
+            this.EquipmentName.Name = "EquipmentName";
+            this.EquipmentName.ReadOnly = true;
+            // 
+            // Amount
+            // 
+            this.Amount.HeaderText = "Количество";
+            this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
+            this.Amount.Width = 80;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(856, 394);
+            this.ClientSize = new System.Drawing.Size(997, 394);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.msMain);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -255,8 +315,13 @@
             this.msMain.PerformLayout();
             this.pnlMain.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridEquipment)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,11 +345,15 @@
         private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.DataGridView gridOrders;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnSign;
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridView gridOrders;
+        private System.Windows.Forms.DataGridView gridEquipment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
     }
 }
 

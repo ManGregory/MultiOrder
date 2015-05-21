@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
@@ -29,6 +28,8 @@ namespace MultiOrderWin
             _bindingSource.PositionChanged += (sender, args) => UpdateEnabled();
             _bindingSource.DataSource = bindingList;            
             gridOrders.DataSource = _bindingSource;
+            var dataGridViewColumn = gridOrders.Columns["Date"];
+            if (dataGridViewColumn != null) dataGridViewColumn.DefaultCellStyle.Format = "D";
             SetRights();
         }
 
@@ -167,6 +168,27 @@ namespace MultiOrderWin
                     gridOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = gridOrders.DefaultCellStyle;
                 }
             }            
+        }
+
+        private void gridOrders_SelectionChanged(object sender, EventArgs e)
+        {
+            var order = _bindingSource.Current as Order;
+            if (order != null) LoadEquipment(order);
+        }
+
+        private void LoadEquipment(Order order)
+        {
+            gridEquipment.Rows.Clear();
+            var equipments =
+                _db.OrdersEquipments.Include(oe => oe.Equipment).Where(oe => oe.OrderId == order.Id).ToList();
+            foreach (var equipment in equipments)
+            {
+                var row = new DataGridViewRow();
+                row.Cells.AddRange(
+                    new DataGridViewTextBoxCell {Value = equipment.Equipment.Name},
+                    new DataGridViewTextBoxCell {Value = equipment.Amount});
+                gridEquipment.Rows.Add(row);
+            }
         }
     }
 }
