@@ -59,6 +59,7 @@ namespace MultiOrderWin
                 builder.ToString();
             config.Save();
             ConfigurationManager.RefreshSection("connectionStrings");
+            MessageBox.Show("Чтобы изменения вступили в силу необходимо перезапустить программу");
         }
     }
 }

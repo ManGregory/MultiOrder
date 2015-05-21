@@ -23,7 +23,7 @@ namespace MultiOrderWin
         /// <returns>Список доступного оборудования</returns>
         public static IEnumerable<Equipment> GetAvailableEquipment(int pair, DateTime date, MediaContext db)
         {
-            var equipments = db.Database.SqlQuery<Equipment>(
+            /*var equipments = db.Database.SqlQuery<Equipment>(
                 "select a.Id, a.Name, a.ClassroomId, " +
                 "	(case " +
                 "		when a.OrderedAmount is Null then a.Amount " +
@@ -38,8 +38,8 @@ namespace MultiOrderWin
                 "	from Equipments as e where e.ClassroomId is null) as a",
                 new SqlParameter("@date", date.Date),
                 new SqlParameter("@pair", pair));
-            return equipments.ToList();
-            //return GetAvailableEquipment(pair, pair, date, db);
+            return equipments.ToList();*/
+            return GetAvailableEquipment(pair, pair, date, db);
         }
 
         /// <summary>
@@ -65,9 +65,8 @@ namespace MultiOrderWin
                 "        from  " +
                 "            (select sum(oe.Amount) am " +
                 "            from OrdersEquipments oe  " +
-                "                join Orders o on oe.OrderId = o.Id and o.IsSigned = 1 and cast(o.[Date] as Date) = @date and (o.FromPair >= @fromPair or o.ToPair <= @toPair) " +
-                "            where oe.EquipmentId = e.Id " +
-                "            group by o.FromPair + '-' + o.ToPair) as b) as OrderedAmount " +
+                "                join Orders o on oe.OrderId = o.Id and o.IsSigned = 1 and cast(o.[Date] as Date) = @date and ((@fromPair between o.FromPair and o.ToPair) or (@toPair between o.FromPair and o.ToPair)) " +
+                "            where oe.EquipmentId = e.Id ) as b) as OrderedAmount " +
                 "    from Equipments e) a " +
                 "where a.ClassroomId is null",
                 new SqlParameter("@date", date.Date),

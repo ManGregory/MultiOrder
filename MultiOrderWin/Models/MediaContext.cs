@@ -15,8 +15,7 @@ namespace MultiOrderWin.Models
 
         public MediaContext()
             : base("MultiOrderConnectionString")
-        {
-            
+        {            
         }
 
         public ObjectContext ObjectContext()

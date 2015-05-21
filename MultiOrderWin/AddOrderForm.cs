@@ -244,6 +244,11 @@ namespace MultiOrderWin
                 MessageBox.Show("Дата подачи заявки должна быть больше текущей, как минимум на два дня");
                 return false;
             }
+            if (numFromPair.Value > numToPair.Value)
+            {
+                MessageBox.Show("Неправильно указаны значения для пар");
+                return false;
+            }
             return true;
         }
 
@@ -362,6 +367,8 @@ namespace MultiOrderWin
         private void edDate_ValueChanged(object sender, EventArgs e)
         {
             SetWeekNumber();
+            RemoveEquipments();
+            BindEquipments();
         }
 
         /// <summary>
@@ -380,6 +387,22 @@ namespace MultiOrderWin
                 Order.OrdersEquipment.Remove(currentOrderEquipment);
                 BindEquipments();
             }
+        }
+
+        /// <summary>
+        /// Очистка списка оборудования при изменении пар (после ввода оборудования нельзя менять пары и дату)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void numFromPair_ValueChanged(object sender, EventArgs e)
+        {
+            RemoveEquipments();
+            BindEquipments();
+        }
+
+        private void RemoveEquipments()
+        {
+            if (Order.OrdersEquipment != null) Order.OrdersEquipment.Clear();
         }
     }
 }

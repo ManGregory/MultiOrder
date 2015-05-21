@@ -33,7 +33,7 @@ from
 		from 
 			(select sum(oe.Amount) am
 			from OrdersEquipments oe 
-				join Orders o on oe.OrderId = o.Id and o.IsSigned = 1 and cast(o.[Date] as Date) = '2015-05-25' and (o.ToPair <= 2) 
+				join Orders o on oe.OrderId = o.Id and o.IsSigned = 1 and cast(o.[Date] as Date) = '2015-05-25' and ((1 between o.FromPair and o.ToPair) or (1 between o.FromPair and o.ToPair))
 			where oe.EquipmentId = e.Id) as b) as OrderedAmount
 	from Equipments e) a
 where a.ClassroomId is null
