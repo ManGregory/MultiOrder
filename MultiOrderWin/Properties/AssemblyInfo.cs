@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MultiOrderWin")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Программа предназначена для автоматизации подачи и обработки заявок на мультимедиа оборудование")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MultiOrderWin")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("ООО \"Ленин Софт\"")]
+[assembly: AssemblyProduct("Заявки на мультимедиа оборудование")]
+[assembly: AssemblyCopyright("©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

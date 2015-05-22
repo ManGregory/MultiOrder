@@ -176,19 +176,20 @@
             // miRef
             // 
             this.miRef.Name = "miRef";
-            this.miRef.Size = new System.Drawing.Size(149, 22);
+            this.miRef.Size = new System.Drawing.Size(152, 22);
             this.miRef.Text = "Справка";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(146, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
             // 
             // miAbout
             // 
             this.miAbout.Name = "miAbout";
-            this.miAbout.Size = new System.Drawing.Size(149, 22);
+            this.miAbout.Size = new System.Drawing.Size(152, 22);
             this.miAbout.Text = "О программе";
+            this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
             // 
             // pnlMain
             // 

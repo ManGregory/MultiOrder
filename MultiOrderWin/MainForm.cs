@@ -353,5 +353,13 @@ namespace MultiOrderWin
         {
             Close();
         }
+
+        private void miAbout_Click(object sender, EventArgs e)
+        {
+            using (var abouForm = new AboutForm())
+            {
+                abouForm.ShowDialog(this);
+            }
+        }
     }
 }
