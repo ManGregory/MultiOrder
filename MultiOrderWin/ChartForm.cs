@@ -9,9 +9,7 @@ namespace MultiOrderWin
         {
             InitializeComponent();
             wb.Navigate("about:blank");
-            cmbPeriod.Items.AddRange(new []{"Неделя", "Месяц", "Семестр"});            
-            cmbPeriod.SelectedIndex = 0;
-            Thread.Sleep(1000);
+            cmbPeriod.Items.AddRange(new []{"Неделя", "Месяц", "Семестр"});                       
         }
 
         private void cmbPeriod_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -27,10 +25,6 @@ namespace MultiOrderWin
         private void edDate_ValueChanged(object sender, System.EventArgs e)
         {
             LoadChart();
-        }
-
-        private void wb_Navigated(object sender, WebBrowserNavigatedEventArgs e)
-        {
         }
     }
 }

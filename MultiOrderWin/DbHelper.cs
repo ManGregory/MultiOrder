@@ -184,11 +184,18 @@ namespace MultiOrderWin
             }
         }
 
+        /// <summary>
+        /// Получение строки заявляемого оборудования на указанную дату и пару
+        /// </summary>
+        /// <param name="date">Дата заявки</param>
+        /// <param name="pairNum">Номер пары</param>
+        /// <returns>Строка с перечислением заявляемого оборудования и его количества</returns>
         private static string GetOrders(DateTime date, int pairNum)
         {
             var ordersText = new StringBuilder();
             using (var db = new MediaContext())
             {
+                // выбираем все заявки
                 var orders = db.Orders
                     .Select(o => o)
                     .Include(o => o.Classroom).Include(o => o.User).ToList()
@@ -196,6 +203,7 @@ namespace MultiOrderWin
                     .ToList();
                 foreach (var o in orders)
                 {
+                    // добавляем оборудование и количество из заявки
                     ordersText.AppendFormat("{0} ({1})<br />", o.Classroom.Name,
                         string.Join(", ",
                             db.OrdersEquipments.Where(oe => oe.OrderId == o.Id)
@@ -207,6 +215,12 @@ namespace MultiOrderWin
             return ordersText.ToString();
         }
 
+        /// <summary>
+        /// Получение строки таблицы графика на неделю
+        /// </summary>
+        /// <param name="fromDate">Дата</param>
+        /// <param name="pairNum">Номер пары</param>
+        /// <returns></returns>
         private static string GetRow(DateTime fromDate, int pairNum)
         {
             var sb = new StringBuilder(string.Format("{0}", "<tr>"));
@@ -214,6 +228,7 @@ namespace MultiOrderWin
                 pairNum == 0 ? "Пара" : pairNum.ToString(),
                 pairNum == 0 ? "<th>" : "<td>",
                 pairNum == 0 ? "</th>" : "</td>");
+            // С начала недели
             var date = fromDate.StartOfWeek(DayOfWeek.Monday);
             while (date <= fromDate.EndOfWeek(DayOfWeek.Monday))
             {
@@ -227,6 +242,11 @@ namespace MultiOrderWin
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Заголовок таблицы
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <returns></returns>
         private static string GetCaption(DateTime fromDate)
         {
             return string.Format("<caption>Учебная неделя № {0}, с {1} по {2}</caption>",
@@ -235,6 +255,11 @@ namespace MultiOrderWin
                 fromDate.EndOfWeek(DayOfWeek.Monday).ToShortDateString());
         }
 
+        /// <summary>
+        /// Формирование графика заявок на неделю
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <returns></returns>
         private static string GetWeekTable(DateTime fromDate)
         {
             var sb = new StringBuilder(string.Format("<table border='1'>{0}", GetCaption(fromDate)));
@@ -247,21 +272,38 @@ namespace MultiOrderWin
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Стили таблицы
+        /// </summary>
+        /// <returns></returns>
         private static string GetStyle()
         {
             return "<style type='text/css'>body {font-family: Tahoma; } td, th {padding: 5px;} table {font-size: 11pt;}</style>";
         }
 
+        /// <summary>
+        /// Заголовок HTML документа
+        /// </summary>
+        /// <returns></returns>
         private static string GetBeginHeader()
         {
             return string.Format("<html><head>{0}</head><body>", GetStyle());
         }
 
+        /// <summary>
+        /// Окончание HTML документа
+        /// </summary>
+        /// <returns></returns>
         private static string GetEndHeader()
         {
             return "</body></html>";
         }
 
+        /// <summary>
+        /// Формирование документа графика заявок на неделю
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <returns></returns>
         private static string GetWeekChart(DateTime fromDate)
         {
             var sb = new StringBuilder();
@@ -271,11 +313,18 @@ namespace MultiOrderWin
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Формирование документа графика заявок на месяц
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <returns></returns>
         private static string GetMonthChart(DateTime fromDate)
         {
             var sb = new StringBuilder();
             sb.AppendLine(GetBeginHeader());
+            // первый день месяца
             var beginDate = new DateTime(fromDate.Year, fromDate.Month, 1);
+            // последний день месяца
             var endDate = new DateTime(fromDate.Year, fromDate.Month,
                 DateTime.DaysInMonth(fromDate.Year, fromDate.Month));
             var date = beginDate;
@@ -289,14 +338,22 @@ namespace MultiOrderWin
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Формирование графика заявок на семестр
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <returns></returns>
         private static string GetSemesterChart(DateTime fromDate)
         {
             var sb = new StringBuilder();
             sb.AppendLine(GetBeginHeader());
+            // выбираем семестр в который входит дату
             var semester = new MediaContext().Semesters.FirstOrDefault(s => fromDate >= s.BeginDate && fromDate <= s.EndDate);
             if (semester != null)
             {
+                // начало семестра
                 var beginDate = semester.BeginDate;
+                // конец семестра
                 var endDate = semester.EndDate;
                 var date = beginDate;
                 while (date <= endDate)
@@ -310,6 +367,12 @@ namespace MultiOrderWin
             return sb.ToString();            
         }
 
+        /// <summary>
+        /// Формирование графика мультимедиа заявок на указанный период
+        /// </summary>
+        /// <param name="period">Период (неделя, месяц, семестр)</param>
+        /// <param name="fromDate">Дата</param>
+        /// <returns>HTML документ представляющий график мультимедиа заявок</returns>
         public static string GetOrderChart(int period, DateTime fromDate)
         {
             if (period == 0) return GetWeekChart(fromDate);
