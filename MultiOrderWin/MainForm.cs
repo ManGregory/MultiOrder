@@ -100,7 +100,7 @@ namespace MultiOrderWin
         /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            using (var addOrderForm = new AddOrderForm())
+            using (var addOrderForm = new AddOrderForm(true))
             {
                 if (addOrderForm.ShowDialog(this) == DialogResult.OK)
                 {

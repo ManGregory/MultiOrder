@@ -18,10 +18,10 @@ namespace MultiOrderWin
         /// </summary>
         private readonly bool _isEditable;
 
-        public AddOrderForm()
+        public AddOrderForm(bool isEditable)
         {
             InitializeComponent();
-            _isEditable = true;
+            _isEditable = isEditable;
             Text = "Добавление заявки";
             Order = new Order();
             LoadWeeks();
@@ -128,12 +128,11 @@ namespace MultiOrderWin
         /// </summary>
         /// <param name="order"></param>
         /// <param name="isEditable"></param>
-        public AddOrderForm(Order order, bool isEditable) : this()
+        public AddOrderForm(Order order, bool isEditable) : this(isEditable)
         {
             Order = order;
             Text = "Редактирование заявки";
             LoadOrder(order);
-            _isEditable = isEditable;
             EnableOrderGui();
         }
 
@@ -402,7 +401,7 @@ namespace MultiOrderWin
 
         private void RemoveEquipments()
         {
-            if (Order.OrdersEquipment != null) Order.OrdersEquipment.Clear();
+            if (_isEditable && (Order.OrdersEquipment != null)) Order.OrdersEquipment.Clear();
         }
     }
 }
