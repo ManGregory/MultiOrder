@@ -366,8 +366,6 @@ namespace MultiOrderWin
         private void edDate_ValueChanged(object sender, EventArgs e)
         {
             SetWeekNumber();
-            RemoveEquipments();
-            BindEquipments();
         }
 
         /// <summary>
@@ -386,17 +384,6 @@ namespace MultiOrderWin
                 Order.OrdersEquipment.Remove(currentOrderEquipment);
                 BindEquipments();
             }
-        }
-
-        /// <summary>
-        /// Очистка списка оборудования при изменении пар (после ввода оборудования нельзя менять пары и дату)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void numFromPair_ValueChanged(object sender, EventArgs e)
-        {
-            RemoveEquipments();
-            BindEquipments();
         }
 
         private void RemoveEquipments()

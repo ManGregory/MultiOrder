@@ -60,8 +60,14 @@ namespace MultiOrderWin
             {
                 // вставка редактируемого оборудования в список для отображения
                 var availableEquipment = cmbEquipment.DataSource as List<Equipment>;
+                var current =
+                    new Equipment
+                    {
+                        Amount = OrdersEquipment.Amount,
+                        Name = _db.Equipments.Find(OrdersEquipment.EquipmentId).Name
+                    };
                 if (availableEquipment != null)
-                    availableEquipment.Insert(0, _db.Equipments.Find(OrdersEquipment.EquipmentId));
+                    availableEquipment.Insert(0, current);
                 cmbEquipment.DataSource = null;
                 cmbEquipment.DataSource = availableEquipment;
             }

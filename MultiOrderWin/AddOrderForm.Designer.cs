@@ -287,7 +287,6 @@
             0,
             0,
             0});
-            this.numToPair.ValueChanged += new System.EventHandler(this.numFromPair_ValueChanged);
             // 
             // numFromPair
             // 
@@ -310,7 +309,6 @@
             0,
             0,
             0});
-            this.numFromPair.ValueChanged += new System.EventHandler(this.numFromPair_ValueChanged);
             // 
             // edDate
             // 
