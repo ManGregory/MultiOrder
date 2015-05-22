@@ -97,7 +97,7 @@
             // miClose
             // 
             this.miClose.Name = "miClose";
-            this.miClose.Size = new System.Drawing.Size(152, 22);
+            this.miClose.Size = new System.Drawing.Size(108, 22);
             this.miClose.Text = "Выход";
             this.miClose.Click += new System.EventHandler(this.miClose_Click);
             // 
@@ -152,14 +152,14 @@
             // miOrderUsers
             // 
             this.miOrderUsers.Name = "miOrderUsers";
-            this.miOrderUsers.Size = new System.Drawing.Size(317, 22);
-            this.miOrderUsers.Text = "Количество заявок в разрезе пользователей";
+            this.miOrderUsers.Size = new System.Drawing.Size(366, 22);
+            this.miOrderUsers.Text = "Количество заявок пользователей в разрезе месяцев";
             this.miOrderUsers.Click += new System.EventHandler(this.miOrderUsers_Click);
             // 
             // miChartMulti
             // 
             this.miChartMulti.Name = "miChartMulti";
-            this.miChartMulti.Size = new System.Drawing.Size(317, 22);
+            this.miChartMulti.Size = new System.Drawing.Size(366, 22);
             this.miChartMulti.Text = "График мультимедиа заявок";
             this.miChartMulti.Click += new System.EventHandler(this.miChartMulti_Click);
             // 

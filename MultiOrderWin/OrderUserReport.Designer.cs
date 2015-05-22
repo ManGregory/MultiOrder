@@ -28,15 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.panel1 = new System.Windows.Forms.Panel();
             this.numYear = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.gridReport = new System.Windows.Forms.DataGridView();
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.OrderUserBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridReport)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OrderUserBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -46,7 +49,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(382, 43);
+            this.panel1.Size = new System.Drawing.Size(723, 43);
             this.panel1.TabIndex = 0;
             // 
             // numYear
@@ -83,31 +86,34 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.gridReport);
+            this.panel2.Controls.Add(this.reportViewer1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 43);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(382, 238);
+            this.panel2.Size = new System.Drawing.Size(723, 321);
             this.panel2.TabIndex = 1;
             // 
-            // gridReport
+            // reportViewer1
             // 
-            this.gridReport.AllowUserToAddRows = false;
-            this.gridReport.AllowUserToDeleteRows = false;
-            this.gridReport.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this.gridReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridReport.Location = new System.Drawing.Point(0, 0);
-            this.gridReport.Name = "gridReport";
-            this.gridReport.ReadOnly = true;
-            this.gridReport.Size = new System.Drawing.Size(382, 238);
-            this.gridReport.TabIndex = 0;
+            this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            reportDataSource1.Name = "DataSet1";
+            reportDataSource1.Value = this.OrderUserBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer1.LocalReport.ReportEmbeddedResource = "MultiOrderWin.Report1.rdlc";
+            this.reportViewer1.Location = new System.Drawing.Point(0, 0);
+            this.reportViewer1.Name = "reportViewer1";
+            this.reportViewer1.Size = new System.Drawing.Size(723, 321);
+            this.reportViewer1.TabIndex = 1;
+            // 
+            // OrderUserBindingSource
+            // 
+            this.OrderUserBindingSource.DataSource = typeof(MultiOrderWin.OrderUser);
             // 
             // OrderUserReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(382, 281);
+            this.ClientSize = new System.Drawing.Size(723, 364);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -115,12 +121,12 @@
             this.MinimizeBox = false;
             this.Name = "OrderUserReport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Отчет по заявкам в разрезе пользователей";
+            this.Text = "Отчет по количеству заявок пользователей в разрезе месяцев";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).EndInit();
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridReport)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OrderUserBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -131,6 +137,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.NumericUpDown numYear;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView gridReport;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private System.Windows.Forms.BindingSource OrderUserBindingSource;
     }
 }

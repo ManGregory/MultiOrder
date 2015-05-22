@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.Reporting.WinForms;
 using MultiOrderWin.Models;
 
 namespace MultiOrderWin
@@ -26,7 +27,9 @@ namespace MultiOrderWin
             using (var db = new MediaContext())
             {
                 var orderUsers =  DbHelper.GetUsersOrderInMonths((int) numYear.Value, db);
-                gridReport.DataSource = orderUsers.ToList();
+                OrderUserBindingSource.DataSource = orderUsers.ToList();
+                reportViewer1.LocalReport.SetParameters(new ReportParameter("Year", numYear.Value.ToString()));
+                reportViewer1.RefreshReport();
             }
         }
     }
