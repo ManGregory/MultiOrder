@@ -395,7 +395,7 @@
         <Top>1.50812cm</Top>
         <Left>0.58208cm</Left>
         <Height>2.67312cm</Height>
-        <Width>16.04667cm</Width>
+        <Width>16.04666cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -456,7 +456,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Иванов А.А.</Value>
+                <Value>=Parameters!Sign.Value</Value>
                 <Style>
                   <FontFamily>Times New Roman</FontFamily>
                   <FontSize>14pt</FontSize>
@@ -468,9 +468,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox19</rd:DefaultName>
         <Top>4.72806cm</Top>
-        <Left>7.62cm</Left>
+        <Left>5.85159cm</Left>
         <Height>0.77639cm</Height>
-        <Width>3.08208cm</Width>
+        <Width>4.85049cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -569,6 +569,10 @@
   </DataSets>
   <ReportParameters>
     <ReportParameter Name="Year">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Sign">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>

@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.SqlClient;
-using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.Linq;
 using System.Text;

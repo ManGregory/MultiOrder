@@ -157,6 +157,7 @@ namespace MultiOrderWin
             SelectClassroom(order.ClassroomId);
             SelectWeek(order.WeekNumber);
             SelectPeriod(order.Period);
+            txtPersonalEquipment.Text = order.PersonalEquipment;
             BindEquipments();
         }
 
@@ -225,6 +226,7 @@ namespace MultiOrderWin
                 Order.UserId = Current.CurrentUser.Id;
                 Order.Period = cmbPeriods.SelectedItem.ToString();
                 Order.WeekNumber = cmbWeeks.SelectedItem.ToString();
+                Order.PersonalEquipment = txtPersonalEquipment.Text;
             }
             else
             {

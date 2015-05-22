@@ -82,7 +82,7 @@
             this.msMain.Location = new System.Drawing.Point(0, 0);
             this.msMain.Name = "msMain";
             this.msMain.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.msMain.Size = new System.Drawing.Size(1026, 24);
+            this.msMain.Size = new System.Drawing.Size(1099, 24);
             this.msMain.TabIndex = 0;
             this.msMain.Text = "menuStrip1";
             // 
@@ -198,7 +198,7 @@
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 24);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1026, 370);
+            this.pnlMain.Size = new System.Drawing.Size(1099, 370);
             this.pnlMain.TabIndex = 1;
             // 
             // panel2
@@ -207,7 +207,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 58);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1026, 312);
+            this.panel2.Size = new System.Drawing.Size(1099, 312);
             this.panel2.TabIndex = 4;
             // 
             // splitContainer1
@@ -223,8 +223,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gridEquipment);
-            this.splitContainer1.Size = new System.Drawing.Size(1026, 312);
-            this.splitContainer1.SplitterDistance = 765;
+            this.splitContainer1.Size = new System.Drawing.Size(1099, 312);
+            this.splitContainer1.SplitterDistance = 859;
             this.splitContainer1.TabIndex = 0;
             // 
             // gridOrders
@@ -237,7 +237,7 @@
             this.gridOrders.Location = new System.Drawing.Point(0, 0);
             this.gridOrders.Name = "gridOrders";
             this.gridOrders.ReadOnly = true;
-            this.gridOrders.Size = new System.Drawing.Size(765, 312);
+            this.gridOrders.Size = new System.Drawing.Size(859, 312);
             this.gridOrders.TabIndex = 0;
             this.gridOrders.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridOrders_CellFormatting);
             this.gridOrders.SelectionChanged += new System.EventHandler(this.gridOrders_SelectionChanged);
@@ -255,7 +255,7 @@
             this.gridEquipment.Location = new System.Drawing.Point(0, 0);
             this.gridEquipment.Name = "gridEquipment";
             this.gridEquipment.ReadOnly = true;
-            this.gridEquipment.Size = new System.Drawing.Size(257, 312);
+            this.gridEquipment.Size = new System.Drawing.Size(236, 312);
             this.gridEquipment.TabIndex = 0;
             // 
             // EquipmentName
@@ -285,7 +285,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1026, 58);
+            this.panel1.Size = new System.Drawing.Size(1099, 58);
             this.panel1.TabIndex = 3;
             // 
             // label2
@@ -378,7 +378,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1026, 394);
+            this.ClientSize = new System.Drawing.Size(1099, 394);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.msMain);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));

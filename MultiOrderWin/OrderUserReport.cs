@@ -11,6 +11,7 @@ namespace MultiOrderWin
         public OrderUserReport()
         {
             InitializeComponent();
+            txtSign.Text = "Иванов А.А.";
             numYear.Value = DateTime.Now.Year;
         }
 
@@ -27,10 +28,20 @@ namespace MultiOrderWin
             using (var db = new MediaContext())
             {
                 var orderUsers =  DbHelper.GetUsersOrderInMonths((int) numYear.Value, db);
+                reportViewer1.LocalReport.SetParameters(
+                    new[]
+                    {
+                        new ReportParameter("Year", numYear.Value.ToString()),
+                        new ReportParameter("Sign", txtSign.Text) 
+                    });
                 OrderUserBindingSource.DataSource = orderUsers.ToList();
-                reportViewer1.LocalReport.SetParameters(new ReportParameter("Year", numYear.Value.ToString()));
                 reportViewer1.RefreshReport();
             }
+        }
+
+        private void btnLoadReport_Click(object sender, EventArgs e)
+        {
+            LoadReport();
         }
     }
 }

@@ -63,5 +63,19 @@ namespace MultiOrderWin
                 configForm.ShowDialog(this);
             }
         }
+
+        /// <summary>
+        /// Обработка нажатий клавиши на форме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LoginForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Отображение формы настройки подключения к серверу (ctrl + p)
+            if (e.Control && e.KeyCode == Keys.P)
+            {
+                btnConfig_Click(null, null);
+            }
+        }
     }
 }

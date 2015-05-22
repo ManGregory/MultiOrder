@@ -56,6 +56,9 @@ namespace MultiOrderWin.Models
         [DisplayName("Учебная неделя")]
         public string WeekNumber { get; set; }
 
+        [DisplayName("Свое оборудование")]
+        public string PersonalEquipment { get; set; }
+
         [Browsable(false)]
         public int Week {
             get

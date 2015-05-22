@@ -55,6 +55,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtPersonalEquipment = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.grpOrderInfo.SuspendLayout();
@@ -69,7 +71,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 335);
+            this.panel1.Location = new System.Drawing.Point(0, 376);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(338, 56);
             this.panel1.TabIndex = 0;
@@ -101,11 +103,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(338, 335);
+            this.panel2.Size = new System.Drawing.Size(338, 376);
             this.panel2.TabIndex = 1;
             // 
             // grpOrderInfo
             // 
+            this.grpOrderInfo.Controls.Add(this.txtPersonalEquipment);
+            this.grpOrderInfo.Controls.Add(this.label5);
             this.grpOrderInfo.Controls.Add(this.btnRemove);
             this.grpOrderInfo.Controls.Add(this.btnEdit);
             this.grpOrderInfo.Controls.Add(this.btnAdd);
@@ -124,14 +128,14 @@
             this.grpOrderInfo.Controls.Add(this.label1);
             this.grpOrderInfo.Location = new System.Drawing.Point(13, 3);
             this.grpOrderInfo.Name = "grpOrderInfo";
-            this.grpOrderInfo.Size = new System.Drawing.Size(314, 326);
+            this.grpOrderInfo.Size = new System.Drawing.Size(314, 367);
             this.grpOrderInfo.TabIndex = 0;
             this.grpOrderInfo.TabStop = false;
             this.grpOrderInfo.Text = "Информация о заявке";
             // 
             // btnRemove
             // 
-            this.btnRemove.Location = new System.Drawing.Point(223, 295);
+            this.btnRemove.Location = new System.Drawing.Point(223, 338);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(75, 23);
             this.btnRemove.TabIndex = 17;
@@ -141,7 +145,7 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(108, 295);
+            this.btnEdit.Location = new System.Drawing.Point(108, 338);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(109, 23);
             this.btnEdit.TabIndex = 16;
@@ -151,7 +155,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(27, 295);
+            this.btnAdd.Location = new System.Drawing.Point(27, 338);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 15;
@@ -162,9 +166,9 @@
             // grpEquipments
             // 
             this.grpEquipments.Controls.Add(this.gridEquipments);
-            this.grpEquipments.Location = new System.Drawing.Point(10, 167);
+            this.grpEquipments.Location = new System.Drawing.Point(10, 199);
             this.grpEquipments.Name = "grpEquipments";
-            this.grpEquipments.Size = new System.Drawing.Size(291, 122);
+            this.grpEquipments.Size = new System.Drawing.Size(291, 133);
             this.grpEquipments.TabIndex = 14;
             this.grpEquipments.TabStop = false;
             this.grpEquipments.Text = "Требуемое оборудование";
@@ -184,7 +188,7 @@
             this.gridEquipments.Location = new System.Drawing.Point(3, 18);
             this.gridEquipments.Name = "gridEquipments";
             this.gridEquipments.ReadOnly = true;
-            this.gridEquipments.Size = new System.Drawing.Size(285, 101);
+            this.gridEquipments.Size = new System.Drawing.Size(285, 112);
             this.gridEquipments.TabIndex = 0;
             this.gridEquipments.SelectionChanged += new System.EventHandler(this.gridEquipments_SelectionChanged);
             // 
@@ -225,18 +229,18 @@
             // cmbPeriods
             // 
             this.cmbPeriods.FormattingEnabled = true;
-            this.cmbPeriods.Location = new System.Drawing.Point(113, 139);
+            this.cmbPeriods.Location = new System.Drawing.Point(128, 139);
             this.cmbPeriods.Name = "cmbPeriods";
-            this.cmbPeriods.Size = new System.Drawing.Size(188, 22);
+            this.cmbPeriods.Size = new System.Drawing.Size(173, 22);
             this.cmbPeriods.TabIndex = 13;
             this.cmbPeriods.SelectedIndexChanged += new System.EventHandler(this.cmbPeriods_SelectedIndexChanged);
             // 
             // cmbWeeks
             // 
             this.cmbWeeks.FormattingEnabled = true;
-            this.cmbWeeks.Location = new System.Drawing.Point(113, 109);
+            this.cmbWeeks.Location = new System.Drawing.Point(128, 109);
             this.cmbWeeks.Name = "cmbWeeks";
-            this.cmbWeeks.Size = new System.Drawing.Size(188, 22);
+            this.cmbWeeks.Size = new System.Drawing.Size(173, 22);
             this.cmbWeeks.TabIndex = 12;
             // 
             // cmbClassrooms
@@ -354,11 +358,27 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Дата подачи";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 174);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(119, 14);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Свое оборудование";
+            // 
+            // txtPersonalEquipment
+            // 
+            this.txtPersonalEquipment.Location = new System.Drawing.Point(128, 171);
+            this.txtPersonalEquipment.Name = "txtPersonalEquipment";
+            this.txtPersonalEquipment.Size = new System.Drawing.Size(173, 22);
+            this.txtPersonalEquipment.TabIndex = 19;
+            // 
             // AddOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(338, 391);
+            this.ClientSize = new System.Drawing.Size(338, 432);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -406,5 +426,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentId;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsFromClassroom;
+        private System.Windows.Forms.TextBox txtPersonalEquipment;
+        private System.Windows.Forms.Label label5;
     }
 }

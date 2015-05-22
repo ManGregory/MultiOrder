@@ -48,10 +48,13 @@ namespace MultiOrderWin
             {
                 DataSource = txtServerName.Text,
                 InitialCatalog = txtDbName.Text,
-                IntegratedSecurity = chkWindowsAuthentification.Checked,
-                UserID = txtUserName.Text,
-                Password = txtPassword.Text
+                IntegratedSecurity = chkWindowsAuthentification.Checked                
             };
+            if (!chkWindowsAuthentification.Checked)
+            {
+                builder.UserID = txtUserName.Text;
+                builder.Password = txtPassword.Text;
+            }
             // сохраняем строку в файл
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");

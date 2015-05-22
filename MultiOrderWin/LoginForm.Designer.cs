@@ -57,7 +57,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(10, 80);
+            this.btnOk.Location = new System.Drawing.Point(64, 80);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(87, 25);
             this.btnOk.TabIndex = 2;
@@ -67,7 +67,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(103, 80);
+            this.btnCancel.Location = new System.Drawing.Point(167, 80);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 25);
             this.btnCancel.TabIndex = 3;
@@ -92,12 +92,13 @@
             // 
             // btnConfig
             // 
-            this.btnConfig.Location = new System.Drawing.Point(196, 80);
+            this.btnConfig.Location = new System.Drawing.Point(0, 80);
             this.btnConfig.Name = "btnConfig";
             this.btnConfig.Size = new System.Drawing.Size(58, 25);
             this.btnConfig.TabIndex = 6;
             this.btnConfig.Text = "...";
             this.btnConfig.UseVisualStyleBackColor = true;
+            this.btnConfig.Visible = false;
             this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
             // 
             // LoginForm
@@ -113,11 +114,13 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Авторизация";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoginForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

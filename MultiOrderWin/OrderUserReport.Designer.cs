@@ -29,21 +29,31 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.OrderUserBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtSign = new System.Windows.Forms.TextBox();
             this.numYear = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.OrderUserBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnLoadReport = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.OrderUserBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.OrderUserBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // OrderUserBindingSource
+            // 
+            this.OrderUserBindingSource.DataSource = typeof(MultiOrderWin.OrderUser);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnLoadReport);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.txtSign);
             this.panel1.Controls.Add(this.numYear);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -51,6 +61,22 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(723, 43);
             this.panel1.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(181, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 14);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Подпись";
+            // 
+            // txtSign
+            // 
+            this.txtSign.Location = new System.Drawing.Point(251, 10);
+            this.txtSign.Name = "txtSign";
+            this.txtSign.Size = new System.Drawing.Size(207, 22);
+            this.txtSign.TabIndex = 2;
             // 
             // numYear
             // 
@@ -96,18 +122,24 @@
             // reportViewer1
             // 
             this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            reportDataSource1.Name = "DataSet1";
-            reportDataSource1.Value = this.OrderUserBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+            reportDataSource2.Name = "DataSet1";
+            reportDataSource2.Value = this.OrderUserBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource2);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "MultiOrderWin.Report1.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(0, 0);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.Size = new System.Drawing.Size(723, 321);
             this.reportViewer1.TabIndex = 1;
             // 
-            // OrderUserBindingSource
+            // btnLoadReport
             // 
-            this.OrderUserBindingSource.DataSource = typeof(MultiOrderWin.OrderUser);
+            this.btnLoadReport.Location = new System.Drawing.Point(464, 9);
+            this.btnLoadReport.Name = "btnLoadReport";
+            this.btnLoadReport.Size = new System.Drawing.Size(145, 23);
+            this.btnLoadReport.TabIndex = 4;
+            this.btnLoadReport.Text = "Загрузить отчет";
+            this.btnLoadReport.UseVisualStyleBackColor = true;
+            this.btnLoadReport.Click += new System.EventHandler(this.btnLoadReport_Click);
             // 
             // OrderUserReport
             // 
@@ -122,11 +154,11 @@
             this.Name = "OrderUserReport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Отчет по количеству заявок пользователей в разрезе месяцев";
+            ((System.ComponentModel.ISupportInitialize)(this.OrderUserBindingSource)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).EndInit();
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.OrderUserBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -139,5 +171,8 @@
         private System.Windows.Forms.Label label1;
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
         private System.Windows.Forms.BindingSource OrderUserBindingSource;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtSign;
+        private System.Windows.Forms.Button btnLoadReport;
     }
 }

@@ -30,6 +30,14 @@ namespace MultiOrderWin
             if (dataGridViewColumn != null) dataGridViewColumn.DefaultCellStyle.Format = "D";
             // изменение интерфейса в зависимости от прав пользователя
             SetRights();
+            if (Current.CurrentUser.IsAdmin)
+            {
+                var newOrdersCount = _db.Orders.Count(o => !o.IsSigned);
+                if (newOrdersCount > 0)
+                {
+                    MessageBox.Show(string.Format("Есть новые заявки. Количество - {0}", newOrdersCount));
+                }
+            }
         }
 
         private void SetRights()
