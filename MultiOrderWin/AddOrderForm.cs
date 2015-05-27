@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects.DataClasses;
 using System.Linq;
@@ -219,6 +220,7 @@ namespace MultiOrderWin
         {
             if (Check())
             {
+                if (Order.OrdersEquipment == null) Order.OrdersEquipment = new Collection<OrdersEquipment>();
                 Order.Date = edDate.Value;
                 Order.FromPair = (int) numFromPair.Value;
                 Order.ToPair = (int) numToPair.Value;

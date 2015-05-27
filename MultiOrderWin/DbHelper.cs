@@ -163,7 +163,8 @@ namespace MultiOrderWin
                         Period = order.Period,
                         WeekNumber = order.WeekNumber,
                         OrdersEquipment = new EntityCollection<OrdersEquipment>(),
-                        UserId = order.UserId
+                        UserId = order.UserId,
+                        PersonalEquipment = order.PersonalEquipment
                     };
                     db.Orders.Add(newOrder);
                     db.SaveChanges();

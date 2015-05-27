@@ -325,9 +325,12 @@ namespace MultiOrderWin
         /// <param name="e"></param>
         private void btnView_Click(object sender, EventArgs e)
         {
-            using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, false))
+            if (_bindingSource.Current != null)
             {
-                addOrderForm.ShowDialog();
+                using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, false))
+                {
+                    addOrderForm.ShowDialog();
+                }
             }
         }
 
