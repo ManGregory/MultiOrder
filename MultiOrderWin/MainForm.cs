@@ -192,13 +192,16 @@ namespace MultiOrderWin
         /// <param name="e"></param>
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, true))
+            if (_bindingSource.Current != null)
             {
-                if (addOrderForm.ShowDialog(this) == DialogResult.OK)
-                {                        
-                    Save();
-                    BindGrid();
-                    _bindingSource.ResetCurrentItem();
+                using (var addOrderForm = new AddOrderForm(_bindingSource.Current as Order, true))
+                {
+                    if (addOrderForm.ShowDialog(this) == DialogResult.OK)
+                    {
+                        Save();
+                        BindGrid();
+                        _bindingSource.ResetCurrentItem();
+                    }
                 }
             }
         }
